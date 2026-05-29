@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-console.log("NEXT_PUBLIC_API_URL =", API_URL);
+
 
 if (!API_URL) {
   throw new Error("NEXT_PUBLIC_API_URL is missing");
@@ -28,7 +28,7 @@ export const getAccessToken = () => {
 
 apiClient.interceptors.request.use(
   (config) => {
-    console.log("REQUEST URL =>", `${config.baseURL}${config.url}`);
+
 
     if (inMemoryAccessToken && config.headers) {
       config.headers.Authorization = `Bearer ${inMemoryAccessToken}`;
