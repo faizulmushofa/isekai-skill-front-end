@@ -65,59 +65,60 @@ export default function DashboardPage() {
       <Sidebar />
 
       {/* Main Command Workspace */}
-      <main className="flex-1 px-4 py-4 md:p-10 flex flex-col gap-6 md:gap-8 max-w-7xl mx-auto w-full z-10 pb-24 md:pb-10">
-        
-        {/* Header Profile Dashboard Overview */}
-        <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4">
-          <div className="flex flex-col gap-1">
-            <div className="text-xs font-bold text-primary-blue uppercase tracking-widest flex items-center gap-1.5">
-              <Sparkles size={12} className="animate-pulse" />
-              SISTEM PROGRESS KEMAMPUAN AETHER
+      <main className="flex-1 min-w-0 px-4 py-4 md:px-8 md:py-10 z-10 pb-24 md:pb-10 overflow-y-auto">
+        <div className="w-full max-w-7xl mx-auto flex flex-col gap-6 md:gap-8">
+          {/* Header Profile Dashboard Overview */}
+          <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4">
+            <div className="flex flex-col gap-1">
+              <div className="text-xs font-bold text-primary-blue uppercase tracking-widest flex items-center gap-1.5">
+                <Sparkles size={12} className="animate-pulse" />
+                SISTEM PROGRESS KEMAMPUAN AETHER
+              </div>
+              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 font-outfit">
+                Command Dashboard
+              </h1>
             </div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 font-outfit">
-              Command Dashboard
-            </h1>
-          </div>
 
-          <div className="flex items-center gap-2 bg-white border border-primary-blue/10 px-3 py-2 rounded-2xl shadow-sm w-full md:w-auto">
-            <span className="text-xs font-semibold text-slate-500 whitespace-nowrap">Jalur Karir:</span>
-            <span className="text-xs font-bold text-primary-blue bg-primary-blue/10 px-2.5 py-1 rounded-xl border border-primary-blue/20 truncate">
-              {careerGoal || "Direct Pathway"}
-            </span>
-          </div>
-        </header>
+            <div className="flex items-center gap-2 bg-white border border-primary-blue/10 px-3 py-2 rounded-2xl shadow-sm w-full md:w-auto">
+              <span className="text-xs font-semibold text-slate-500 whitespace-nowrap">Jalur Karir:</span>
+              <span className="text-xs font-bold text-primary-blue bg-primary-blue/10 px-2.5 py-1 rounded-xl border border-primary-blue/20 truncate">
+                {careerGoal || "Direct Pathway"}
+              </span>
+            </div>
+          </header>
 
-        {/* Profile Stats & Flat Skills Trackers Section */}
-        <ProfilePanel user={user} parentSkills={parentSkills} d={d} />
+          {/* Profile Stats & Flat Skills Trackers Section */}
+          <ProfilePanel user={user} parentSkills={parentSkills} d={d} />
 
-        {/* Master Adventure Grid: 2/3 (Quests & Evidences) and 1/3 (Stats & Buffs) */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mt-0 md:mt-2">
-          
-          {/* Left Area (2/3 width on lg): Quests & Learning Logs */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <ActiveQuestsBoard 
-              parentSkills={parentSkills} 
-              projectsCount={p.projects.length} 
-              journalsCount={j.journals.length} 
-            />
+          {/* Master Adventure Grid: 2/3 (Quests & Evidences) and 1/3 (Stats & Buffs) */}
+          <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mt-0 md:mt-2">
             
-            {/* Evidence sub-grids (Recent Projects & Journals side-by-side) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <ConnectedProjectsGrid loading={p.loading} projects={p.projects} />
-              <RecentJournalsGrid loading={j.loading} journals={j.journals} />
+            {/* Left Area (2/3 width on lg): Quests & Learning Logs */}
+            <div className="lg:col-span-2 flex flex-col gap-6">
+              <ActiveQuestsBoard 
+                parentSkills={parentSkills} 
+                projectsCount={p.projects.length} 
+                journalsCount={j.journals.length} 
+              />
+              
+              {/* Evidence sub-grids (Recent Projects & Journals side-by-side) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <ConnectedProjectsGrid loading={p.loading} projects={p.projects} />
+                <RecentJournalsGrid loading={j.loading} journals={j.journals} />
+              </div>
             </div>
-          </div>
 
-          {/* Right Area (1/3 width on lg): Adventure Stats & Active Buffs */}
-          <div className="flex flex-col gap-6">
-            <AdventureStatsWidget 
-              parentSkills={parentSkills} 
-              projectsCount={p.projects.length} 
-              journalsCount={j.journals.length} 
-            />
-            <ActiveBuffsWidget />
-          </div>
-        </section>
+            {/* Right Area (1/3 width on lg): Adventure Stats & Active Buffs */}
+            <div className="flex flex-col gap-6">
+              <AdventureStatsWidget 
+                parentSkills={parentSkills} 
+                projectsCount={p.projects.length} 
+                journalsCount={j.journals.length} 
+              />
+              <ActiveBuffsWidget />
+            </div>
+          </section>
+        </div>
       </main>
     </div>
   );

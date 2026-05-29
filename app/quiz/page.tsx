@@ -68,43 +68,44 @@ export default function QuizPage() {
     <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 relative">
       <Sidebar />
 
-      <main className="flex-1 px-4 pt-4 pb-28 md:pb-8 md:p-8 flex flex-col gap-4 max-w-7xl mx-auto w-full md:h-full md:overflow-hidden z-10">
-        
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:mt-6">
-          <div className="flex flex-col gap-1">
-            <span className="text-xs font-bold text-sky-blue uppercase tracking-widest flex items-center gap-1.5">
-              <Sword size={12} />
-              ARENA TANTANGAN KEMAMPUAN AI
-            </span>
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 font-outfit">
-              Quiz Arena
-            </h1>
-          </div>
+      <main className="flex-1 min-w-0 px-4 pt-4 pb-28 md:px-8 md:py-8 flex flex-col z-10 md:h-full md:overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto flex-1 flex flex-col gap-4">
+          {/* Header */}
+          <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:mt-6">
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-bold text-sky-blue uppercase tracking-widest flex items-center gap-1.5">
+                <Sword size={12} />
+                ARENA TANTANGAN KEMAMPUAN AI
+              </span>
+              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 font-outfit">
+                Quiz Arena
+              </h1>
+            </div>
 
-          <button
-            onClick={resetQuiz}
-            className="p-2 text-slate-600 hover:text-primary-blue rounded-xl bg-white border border-slate-200 cursor-pointer hover:bg-slate-50 flex items-center gap-1.5 text-xs font-bold shadow-sm"
-          >
-            <RotateCcw size={14} />
-            Mulai Ulang Chat
-          </button>
-        </header>
+            <button
+              onClick={resetQuiz}
+              className="p-2 text-slate-600 hover:text-primary-blue rounded-xl bg-white border border-slate-200 cursor-pointer hover:bg-slate-50 flex items-center gap-1.5 text-xs font-bold shadow-sm"
+            >
+              <RotateCcw size={14} />
+              Mulai Ulang Chat
+            </button>
+          </header>
 
-        {/* Full-width Immersive Conversational GPT Chatbot Terminal */}
-        <section className="flex-1 min-h-0 w-full flex flex-col">
-          <ChatbotTerminal
-            messages={messages}
-            quizState={quizState}
-            currentQuestionIndex={currentQuestionIndex}
-            totalQuestions={totalQuestions}
-            quizStoreLoading={quizStoreLoading}
-            selectMode={selectMode}
-            handleSend={handleSend}
-            inputVal={inputVal}
-            setInputVal={setInputVal}
-          />
-        </section>
+          {/* Full-width Immersive Conversational GPT Chatbot Terminal */}
+          <section className="flex-1 min-h-0 w-full flex flex-col">
+            <ChatbotTerminal
+              messages={messages}
+              quizState={quizState}
+              currentQuestionIndex={currentQuestionIndex}
+              totalQuestions={totalQuestions}
+              quizStoreLoading={quizStoreLoading}
+              selectMode={selectMode}
+              handleSend={handleSend}
+              inputVal={inputVal}
+              setInputVal={setInputVal}
+            />
+          </section>
+        </div>
       </main>
     </div>
   );
