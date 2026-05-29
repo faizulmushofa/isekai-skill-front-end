@@ -62,12 +62,15 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (originalRequest.url?.includes("/auth/refresh")) {
-      if (typeof window !== "undefined") {
-        setAccessToken(null);
-        window.dispatchEvent(new Event("auth_session_expired"));
+    // Jangan coba melakukan silent refresh untuk endpoint otentikasi (/auth/*)
+    // agar kesalahan asli (salah password, OTP kedaluwarsa, dll.) tidak tertimpa
+    if (originalRequest.url?.includes("/auth/")) {
+      if (originalRequest.url?.includes("/auth/refresh")) {
+        if (typeof window !== "undefined") {
+          setAccessToken(null);
+          window.dispatchEvent(new Event("auth_session_expired"));
+        }
       }
-
       return Promise.reject(error);
     }
 
