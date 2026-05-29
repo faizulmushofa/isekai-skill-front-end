@@ -13,7 +13,7 @@ interface JournalEditorViewerProps {
 
 export default function JournalEditorViewer({ j }: JournalEditorViewerProps) {
   return (
-    <GlassCard className="p-6 border border-primary-blue/10 h-[700px] flex flex-col bg-white shadow-sm">
+    <GlassCard className="p-6 border border-primary-blue/10 h-[500px] md:h-[700px] flex flex-col bg-white shadow-sm">
       <AnimatePresence mode="wait">
         {/* WRITE / CREATE NEW JOURNAL */}
         {j.isCreating ? (

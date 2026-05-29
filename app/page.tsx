@@ -61,7 +61,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-midnight relative">
+    <div className="flex flex-col md:flex-row min-h-screen bg-midnight relative">
       <Sidebar />
 
       {/* Main Command Workspace */}

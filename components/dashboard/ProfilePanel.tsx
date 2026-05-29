@@ -68,7 +68,7 @@ export default function ProfilePanel({ user, parentSkills, d }: ProfilePanelProp
       </GlassCard>
 
       {/* Skill List Percentage List */}
-      <GlassCard className="lg:col-span-2 flex flex-col gap-4 border border-primary-blue/5 bg-white shadow-md rounded-2xl">
+      <GlassCard className="lg:col-span-2 flex flex-col gap-4 border border-primary-blue/5 bg-white shadow-md rounded-2xl p-6 md:p-8">
         <h3 className="text-xs font-bold tracking-wider text-slate-500 uppercase border-b border-slate-100 pb-3">
           Progres Kompetensi Saat Ini (Skill)
         </h3>

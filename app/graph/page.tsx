@@ -79,7 +79,7 @@ export default function SkillGraphPage() {
         </header>
 
         {/* Spacious SVG Skill Graph - Full Page Width */}
-        <section className="w-full flex flex-col flex-1 min-h-[620px]">
+        <section className="w-full flex flex-col flex-1 min-h-[480px] md:min-h-[620px]">
           <SkillGraphCanvas
             parentSkills={parentSkills}
             selectedSkill={d.selectedSkill}

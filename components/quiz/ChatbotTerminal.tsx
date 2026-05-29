@@ -172,7 +172,7 @@ export default function ChatbotTerminal({
         <button
           type="submit"
           disabled={!inputVal.trim() || quizStoreLoading}
-          className="w-12 h-12 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/40 text-sky-200 flex items-center justify-center shrink-0 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+          className="w-12 h-12 rounded-xl bg-primary-blue hover:bg-sky-blue disabled:bg-slate-100 border border-transparent disabled:border-slate-200 text-white disabled:text-slate-400 flex items-center justify-center shrink-0 cursor-pointer disabled:cursor-not-allowed transition-all duration-200 shadow-sm"
         >
           <Send size={18} />
         </button>

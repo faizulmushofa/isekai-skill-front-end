@@ -105,6 +105,54 @@ export default function SkillGraphCanvas({
     setZoom(newZoom);
   };
 
+  // For mobile touch gestures
+  const [touchStartDist, setTouchStartDist] = useState<number | null>(null);
+  const [touchStartZoom, setTouchStartZoom] = useState<number>(1.0);
+  const [lastTouchPos, setLastTouchPos] = useState<{ x: number; y: number } | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      setLastTouchPos({ x: touch.clientX, y: touch.clientY });
+    } else if (e.touches.length === 2) {
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      setTouchStartDist(dist);
+      setTouchStartZoom(zoom);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 1 && lastTouchPos) {
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - lastTouchPos.x;
+      const deltaY = touch.clientY - lastTouchPos.y;
+      setPanOffset((prev) => ({
+        x: prev.x + deltaX,
+        y: prev.y + deltaY,
+      }));
+      setLastTouchPos({ x: touch.clientX, y: touch.clientY });
+    } else if (e.touches.length === 2 && touchStartDist !== null) {
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      if (touchStartDist > 0) {
+        const factor = dist / touchStartDist;
+        const newZoom = Math.max(0.4, Math.min(3.0, touchStartZoom * factor));
+        setZoom(newZoom);
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setLastTouchPos(null);
+    setTouchStartDist(null);
+  };
+
+
   const parentNodes = parentSkills.map((skill, i) => {
     const angle = (i * 2 * Math.PI) / parentSkills.length - Math.PI / 2;
     const baseX = centerX + parentRadius * Math.cos(angle);
@@ -175,14 +223,14 @@ export default function SkillGraphCanvas({
   };
 
   return (
-    <GlassCard hoverGlow={false} className="w-full relative min-h-[780px] border border-primary-blue/5 bg-white shadow-md rounded-2xl flex flex-col animate-[fadeIn_0.5s_ease-out] overflow-hidden">
+    <GlassCard hoverGlow={false} className="w-full relative min-h-[500px] md:min-h-[780px] border border-primary-blue/5 bg-white shadow-md rounded-2xl flex flex-col animate-[fadeIn_0.5s_ease-out] overflow-hidden">
       <div className="flex items-center justify-between border-b border-slate-100 p-4 pb-3 mb-1 bg-white z-10 select-none">
         <div>
           <h3 className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-1">
             ✦ Peta Graf Kemampuan Interaktif (Spacious Celestial Constellation)
           </h3>
           <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
-            Gunakan scroll mouse / tombol untuk zoom • Tarik background untuk pan/geser • Drag node untuk memindahkan bintang
+            Cubit layar untuk zoom • Tarik background untuk pan/geser • Drag node untuk memindahkan bintang
           </p>
         </div>
         <div className="flex items-center gap-4 text-[10px] font-bold text-slate-500">
@@ -229,12 +277,17 @@ export default function SkillGraphCanvas({
         </div>
 
         <svg 
-          className={`w-full h-[720px] select-none z-10 ${draggedNode?.id === "canvas" ? "cursor-grabbing" : "cursor-grab"}`} 
+          className={`w-full h-[450px] md:h-[720px] select-none z-10 ${draggedNode?.id === "canvas" ? "cursor-grabbing" : "cursor-grab"}`} 
           viewBox="0 0 1100 800"
+          style={{ touchAction: "none" }}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onWheel={handleWheel}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
         >
           {/* Draggable SVG Background Rect to capture canvas panning */}
           <rect 
