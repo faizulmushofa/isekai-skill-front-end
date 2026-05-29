@@ -13,7 +13,11 @@ interface JournalEditorViewerProps {
 
 export default function JournalEditorViewer({ j }: JournalEditorViewerProps) {
   return (
-    <GlassCard className="p-6 border border-primary-blue/10 h-[500px] md:h-[700px] flex flex-col bg-white shadow-sm">
+    <GlassCard className={`p-6 border border-primary-blue/10 flex flex-col bg-white shadow-sm transition-all duration-300 ${
+      (j.isCreating || j.selectedJournal) 
+        ? "fixed inset-0 z-[60] h-full rounded-none border-none p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom,20px))] pt-[calc(1.5rem+env(safe-area-inset-top,20px))] lg:relative lg:inset-auto lg:z-auto lg:h-[700px] lg:rounded-2xl lg:border lg:p-6"
+        : "hidden lg:flex lg:relative lg:inset-auto lg:z-auto lg:h-[700px] lg:rounded-2xl"
+    }`}>
       <AnimatePresence mode="wait">
         {/* WRITE / CREATE NEW JOURNAL */}
         {j.isCreating ? (
@@ -30,7 +34,11 @@ export default function JournalEditorViewer({ j }: JournalEditorViewerProps) {
                 type="button"
                 onClick={() => {
                   j.setIsCreating(false);
-                  if (j.journals.length > 0) j.setSelectedJournal(j.journals[0]);
+                  if (window.innerWidth < 1024) {
+                    j.setSelectedJournal(null);
+                  } else if (j.journals.length > 0) {
+                    j.setSelectedJournal(j.journals[0]);
+                  }
                 }}
                 className="p-1 text-slate-500 hover:text-slate-800 cursor-pointer"
               >
@@ -78,15 +86,24 @@ export default function JournalEditorViewer({ j }: JournalEditorViewerProps) {
             className="flex flex-col gap-5 flex-1 h-full min-h-0"
           >
             <div className="flex justify-between items-start border-b border-slate-100 pb-4">
-              <div className="flex flex-col gap-1.5">
-                <span className="text-[10px] text-primary-blue font-bold bg-primary-blue/10 px-2.5 py-0.5 rounded-full border border-primary-blue/20 inline-block w-fit">
-                  Journal Log
-                </span>
-                <h2 className="text-xl font-extrabold text-slate-900 tracking-wide leading-tight">
-                  {j.selectedJournal.title}
-                </h2>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => j.setSelectedJournal(null)}
+                  className="lg:hidden p-1 text-slate-500 hover:text-slate-800 cursor-pointer shrink-0"
+                >
+                  <ArrowLeft size={16} />
+                </button>
+                <div className="flex flex-col gap-1.5 min-w-0">
+                  <span className="text-[10px] text-primary-blue font-bold bg-primary-blue/10 px-2.5 py-0.5 rounded-full border border-primary-blue/20 inline-block w-fit">
+                    Journal Log
+                  </span>
+                  <h2 className="text-xl font-extrabold text-slate-900 tracking-wide leading-tight truncate max-w-[160px] xs:max-w-xs sm:max-w-md">
+                    {j.selectedJournal.title}
+                  </h2>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-slate-650 font-bold bg-slate-50 px-3 py-1 rounded-xl border border-slate-200">
+              <div className="flex items-center gap-1.5 text-xs text-slate-650 font-bold bg-slate-50 px-3 py-1 rounded-xl border border-slate-200 shrink-0">
                 <Calendar size={12} />
                 {new Date(j.selectedJournal.createdAt).toLocaleDateString("id-ID", {
                   day: "numeric",

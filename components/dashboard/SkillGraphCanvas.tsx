@@ -447,11 +447,10 @@ export default function SkillGraphCanvas({
                     cx={node.x}
                     cy={node.y}
                     r={isHovered ? 38 : 34}
-                    fill="#ffffff"
                     stroke={isSelected ? "#2563eb" : node.color}
                     strokeWidth={isSelected ? 5.5 : 3.5}
                     onMouseDown={(e) => handleMouseDown(e, node.id)}
-                    className="transition-all duration-350 filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+                    className="transition-all duration-350 filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.08)] fill-white dark:fill-slate-800"
                   />
 
                   {/* Text progress */}
@@ -459,10 +458,9 @@ export default function SkillGraphCanvas({
                     x={node.x}
                     y={node.y + 4.5}
                     textAnchor="middle"
-                    fill="#1e293b"
                     fontSize={isHovered ? 13.5 : 12.5}
                     fontWeight="950"
-                    className="font-outfit pointer-events-none transition-all duration-350"
+                    className="font-outfit pointer-events-none transition-all duration-350 fill-slate-850 dark:fill-slate-100"
                   >
                     {Math.round(node.progress)}%
                   </text>
@@ -474,19 +472,24 @@ export default function SkillGraphCanvas({
                     width={140}
                     height={22}
                     rx={6}
-                    fill="#ffffff"
-                    stroke={isHovered ? "rgba(37, 99, 235, 0.25)" : "rgba(37, 99, 235, 0.1)"}
                     strokeWidth="1.5"
-                    className="pointer-events-none filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.02)] transition-all duration-300"
+                    className={`pointer-events-none filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.02)] transition-all duration-300 fill-white dark:fill-slate-800 ${
+                      isHovered
+                        ? "stroke-primary-blue/30 dark:stroke-primary-blue/50"
+                        : "stroke-primary-blue/10 dark:stroke-slate-700"
+                    }`}
                   />
                   <text
                     x={node.x}
                     y={node.y + 56}
                     textAnchor="middle"
-                    fill={isSelected || isHovered ? "#2563eb" : "#475569"}
                     fontSize="10"
                     fontWeight="bold"
-                    className="font-outfit pointer-events-none transition-all duration-300"
+                    className={`font-outfit pointer-events-none transition-all duration-300 ${
+                      isSelected || isHovered
+                        ? "fill-primary-blue dark:fill-sky-400"
+                        : "fill-slate-650 dark:fill-slate-200"
+                    }`}
                   >
                     {node.name.length > 22 ? `${node.name.substring(0, 19)}..` : node.name}
                   </text>
@@ -531,11 +534,10 @@ export default function SkillGraphCanvas({
                     cx={child.x}
                     cy={child.y}
                     r={isHovered ? 26 : 22}
-                    fill="#ffffff"
                     stroke={isSelected ? "#2563eb" : child.color}
                     strokeWidth={isSelected ? 4.5 : 2.5}
                     onMouseDown={(e) => handleMouseDown(e, child.id)}
-                    className="transition-all duration-350 filter drop-shadow-[0_1px_5px_rgba(0,0,0,0.06)]"
+                    className="transition-all duration-350 filter drop-shadow-[0_1px_5px_rgba(0,0,0,0.06)] fill-white dark:fill-slate-800"
                   />
 
                   {/* Text progress */}
@@ -543,10 +545,9 @@ export default function SkillGraphCanvas({
                     x={child.x}
                     y={child.y + 3.5}
                     textAnchor="middle"
-                    fill="#334155"
                     fontSize={isHovered ? 11 : 9.5}
                     fontWeight="950"
-                    className="font-outfit pointer-events-none transition-all duration-350"
+                    className="font-outfit pointer-events-none transition-all duration-350 fill-slate-750 dark:fill-slate-200"
                   >
                     {Math.round(child.progress)}%
                   </text>
@@ -556,10 +557,13 @@ export default function SkillGraphCanvas({
                     x={child.x}
                     y={child.y + 32}
                     textAnchor="middle"
-                    fill={isSelected || isHovered ? "#2563eb" : "#64748b"}
                     fontSize="8.5"
                     fontWeight="bold"
-                    className="font-outfit pointer-events-none transition-all duration-300"
+                    className={`font-outfit pointer-events-none transition-all duration-300 ${
+                      isSelected || isHovered
+                        ? "fill-primary-blue dark:fill-sky-400"
+                        : "fill-slate-500 dark:fill-slate-350"
+                    }`}
                   >
                     {child.name.length > 16 ? `${child.name.substring(0, 14)}..` : child.name}
                   </text>

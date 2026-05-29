@@ -124,11 +124,22 @@ export default function Sidebar() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", bounce: 0.08, duration: 0.38 }}
-              className="md:hidden fixed bottom-0 left-0 right-0 z-[70] bg-white rounded-t-3xl p-6 flex flex-col gap-5 shadow-2xl border-t border-slate-200/60"
+              className="md:hidden fixed bottom-0 left-0 right-0 z-[70] bg-white rounded-t-3xl p-6 flex flex-col gap-5 shadow-2xl border-t border-slate-200/60 max-h-[85vh] overflow-y-auto"
               style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
             >
-              {/* Handle */}
-              <div className="w-10 h-1 bg-slate-200 rounded-full mx-auto -mt-1 mb-1" />
+              {/* Handle row with Close Button */}
+              <div className="flex items-center justify-between -mt-2 mb-1 w-full relative">
+                <div className="w-10 h-1 bg-slate-200 rounded-full absolute left-1/2 -translate-x-1/2" />
+                <div className="w-full flex justify-end">
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-1.5 rounded-full bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition-colors cursor-pointer shadow-sm"
+                    aria-label="Tutup"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              </div>
 
               {/* User card */}
               <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100">

@@ -48,7 +48,7 @@ export default function FeedbackWidget() {
   };
 
   return (
-    <div className="fixed top-4 right-4 md:top-auto md:bottom-6 md:right-6 z-[999]">
+    <div className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-[999]">
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -66,10 +66,10 @@ export default function FeedbackWidget() {
 
       {/* Pop-up Form */}
       <div 
-        className={`absolute top-14 md:top-auto md:bottom-16 right-0 w-85 sm:w-96 transition-all duration-300 origin-top-right md:origin-bottom-right ${
+        className={`absolute bottom-16 right-0 w-[calc(100vw-2rem)] sm:w-96 transition-all duration-300 origin-bottom-right ${
           isOpen 
             ? "opacity-100 scale-100 translate-y-0" 
-            : "opacity-0 scale-95 translate-y-[-10px] md:translate-y-4 pointer-events-none"
+            : "opacity-0 scale-95 translate-y-4 pointer-events-none"
         }`}
       >
         <GlassCard hoverGlow={false} className="p-5 shadow-2xl border border-slate-200/50 bg-white/95 backdrop-blur-xl">
