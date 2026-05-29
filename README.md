@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ISEKAI SKILL FRONTEND
 
-## Getting Started
+Isekai Skill Frontend adalah antarmuka web utama untuk sistem Aether. Proyek ini menyediakan dasbor bertema RPG bagi pengguna untuk melacak kemajuan belajar mereka, mengunggah bukti (seperti repositori GitHub atau jurnal belajar), dan menguji pengetahuan teoretis mereka melalui AI Quiz Arena yang adaptif.
 
-First, run the development server:
+━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-```bash
+📦 FITUR
+- Progresi Skill RPG: Visualisasikan jalur belajar Anda sebagai pohon keahlian (skill tree) atau konstelasi.
+- Pelacakan Bukti: Hubungkan proyek GitHub Anda dan dokumentasikan jurnal belajar harian.
+- AI Quiz Arena: Ikuti kuis yang dibuat secara dinamis berdasarkan keahlian aktif dan tingkat XP Anda.
+- Widget Umpan Balik Dinamis: Kirimkan laporan bug atau umpan balik umum dengan mudah.
+- Autentikasi Aman: Manajemen sesi yang aman memanfaatkan cookie HttpOnly dan token in-memory.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛠 TEKNOLOGI (TECH STACK)
+- Next.js (React)
+- Tailwind CSS v4
+- Zustand
+- Axios
+- Framer Motion
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🏗 ARSITEKTUR
+Klien (Next.js) → API (NestJS) → Database (PostgreSQL)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚙️ INSTALASI
+
+1. Kloning Repositori
+git clone <repo-url>
+
+2. Masuk ke Proyek
+cd isekai-skill-frontend
+
+3. Instal Dependensi
+npm install
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔑 VARIABEL LINGKUNGAN (ENV)
+
+.env.local
+
+PORT=3000
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 PERINTAH APLIKASI (RUN COMMANDS)
+
+Pengembangan (Development):
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build Produksi:
+npm run build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Mulai Server Produksi:
+npm run start
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Linting:
+npm run lint
 
-## Learn More
+━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-To learn more about Next.js, take a look at the following resources:
+🌐 API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+URL Dasar:
+http://localhost:5000/api
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Endpoint Utama:
+- Auth (Autentikasi)
+- Users (Pengguna)
+- Projects (Proyek)
+- Skills (Keahlian)
+- Quests (Misi)
 
-## Deploy on Vercel
+━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+📁 STRUKTUR PROYEK
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+/
+├── app/                  # Next.js App Router (Halaman & Layout)
+├── components/           # Komponen UI yang dapat digunakan kembali
+│   ├── dashboard/        # Komponen khusus dasbor
+│   ├── project/          # Komponen penghubung proyek
+│   ├── quiz/             # Komponen Quiz Arena
+│   └── ui/               # Elemen UI inti
+├── hooks/                # Custom React Hooks
+├── lib/                  # Utilitas dan konfigurasi klien API
+├── stores/               # Manajemen state Zustand
+└── public/               # Aset statis
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🗺 PETA JALAN (ROADMAP)
+- [ ] Menghubungkan ke Endpoint Backend Asli
+- [ ] Mengimplementasikan Logika AI Quiz Arena
+- [ ] Menambahkan Visualisasi Konstelasi Keahlian
+- [ ] Memperluas Widget Dasbor
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📄 LISENSI
+MIT

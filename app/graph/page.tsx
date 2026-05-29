@@ -4,20 +4,11 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useDashboard } from "@/hooks/useDashboard";
-import { useProjects } from "@/hooks/useProjects";
-import { useJournals } from "@/hooks/useJournals";
 import Sidebar from "@/components/ui/Sidebar";
-import OnboardingPanel from "@/components/dashboard/OnboardingPanel";
-import ProfilePanel from "@/components/dashboard/ProfilePanel";
+import SkillGraphCanvas from "@/components/dashboard/SkillGraphCanvas";
 import { Sparkles } from "lucide-react";
 
-import ActiveQuestsBoard from "@/components/dashboard/ActiveQuestsBoard";
-import ConnectedProjectsGrid from "@/components/dashboard/ConnectedProjectsGrid";
-import RecentJournalsGrid from "@/components/dashboard/RecentJournalsGrid";
-import AdventureStatsWidget from "@/components/dashboard/AdventureStatsWidget";
-import ActiveBuffsWidget from "@/components/dashboard/ActiveBuffsWidget";
-
-export default function DashboardPage() {
+export default function SkillGraphPage() {
   const router = useRouter();
   const {
     user,
@@ -25,13 +16,12 @@ export default function DashboardPage() {
     isLoading,
     parentSkills,
     initializeAuth,
+    fetchCareerProgress,
     onboardingStep,
     careerGoal,
   } = useAuthStore();
 
   const d = useDashboard();
-  const p = useProjects();
-  const j = useJournals();
 
   useEffect(() => {
     initializeAuth();
@@ -56,8 +46,9 @@ export default function DashboardPage() {
 
   if (!isAuthenticated) return null;
 
-  if (!careerGoal || onboardingStep !== "DONE") {
-    return <OnboardingPanel user={user} onboardingStep={onboardingStep} d={d} />;
+  if (parentSkills.length === 0 || onboardingStep !== "DONE") {
+    router.push("/");
+    return null;
   }
 
   return (
@@ -75,7 +66,7 @@ export default function DashboardPage() {
               SISTEM PROGRESS KEMAMPUAN AETHER
             </div>
             <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 font-outfit">
-              Command Dashboard
+              Skill Constellation Tree
             </h1>
           </div>
 
@@ -87,36 +78,15 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        {/* Profile Stats & Flat Skills Trackers Section */}
-        <ProfilePanel user={user} parentSkills={parentSkills} d={d} />
-
-        {/* Master Adventure Grid: 2/3 (Quests & Evidences) and 1/3 (Stats & Buffs) */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-2">
-          
-          {/* Left Area (2/3 width on lg): Quests & Learning Logs */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <ActiveQuestsBoard 
-              parentSkills={parentSkills} 
-              projectsCount={p.projects.length} 
-              journalsCount={j.journals.length} 
-            />
-            
-            {/* Evidence sub-grids (Recent Projects & Journals side-by-side) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <ConnectedProjectsGrid loading={p.loading} projects={p.projects} />
-              <RecentJournalsGrid loading={j.loading} journals={j.journals} />
-            </div>
-          </div>
-
-          {/* Right Area (1/3 width on lg): Adventure Stats & Active Buffs */}
-          <div className="flex flex-col gap-6">
-            <AdventureStatsWidget 
-              parentSkills={parentSkills} 
-              projectsCount={p.projects.length} 
-              journalsCount={j.journals.length} 
-            />
-            <ActiveBuffsWidget />
-          </div>
+        {/* Spacious SVG Skill Graph - Full Page Width */}
+        <section className="w-full flex flex-col flex-1 min-h-[620px]">
+          <SkillGraphCanvas
+            parentSkills={parentSkills}
+            selectedSkill={d.selectedSkill}
+            setSelectedSkill={d.setSelectedSkill}
+            fetchCareerProgress={fetchCareerProgress}
+            careerGoal={careerGoal}
+          />
         </section>
       </main>
     </div>
