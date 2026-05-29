@@ -65,13 +65,13 @@ export default function QuizPage() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50 relative">
+    <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 relative">
       <Sidebar />
 
-      <main className="flex-1 pt-20 md:pt-0 p-6 md:p-8 flex flex-col gap-4 max-w-7xl mx-auto w-full h-full overflow-hidden z-10">
+      <main className="flex-1 px-4 pt-4 pb-28 md:pb-8 md:p-8 flex flex-col gap-4 max-w-7xl mx-auto w-full md:h-full md:overflow-hidden z-10">
         
         {/* Header */}
-        <header className="flex items-center justify-between mt-10 md:mt-6">
+        <header className="flex items-center justify-between md:mt-6">
           <div className="flex flex-col gap-1">
             <span className="text-xs font-bold text-sky-blue uppercase tracking-widest flex items-center gap-1.5">
               <Sword size={12} />

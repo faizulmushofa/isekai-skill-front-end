@@ -43,7 +43,7 @@ export default function JournalSidebarList({ j }: JournalSidebarListProps) {
       </GlassCard>
 
       {/* List of Journals */}
-      <GlassCard className="flex flex-col gap-4 h-[496px] overflow-y-auto border border-primary-blue/10 bg-white shadow-sm p-5">
+      <GlassCard className="flex flex-col gap-4 max-h-[360px] lg:h-[496px] overflow-y-auto border border-primary-blue/10 bg-white shadow-sm p-5">
         <h3 className="text-xs font-semibold tracking-wider text-slate-500 uppercase border-b border-slate-100 pb-3">
           Daftar Catatan Jurnal
         </h3>

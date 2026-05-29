@@ -29,13 +29,13 @@ export default function ProjectsPage() {
   const hasSkillDeltas = p.latestScanResult?.skillDeltas && p.latestScanResult.skillDeltas.length > 0;
 
   return (
-    <div className="flex min-h-screen bg-slate-50 relative">
+    <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 relative">
       <Sidebar />
 
-      <main className="flex-1 p-6 md:p-10 flex flex-col gap-8 max-w-7xl mx-auto w-full z-10">
+      <main className="flex-1 px-4 py-4 md:p-10 flex flex-col gap-6 md:gap-8 max-w-7xl mx-auto w-full z-10 pb-28 md:pb-10">
         
         {/* Header */}
-        <header className="flex items-center justify-between mt-10 md:mt-0">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex flex-col gap-1">
             <span className="text-xs font-bold text-primary-blue uppercase tracking-widest flex items-center gap-1.5">
               <FolderGit2 size={12} />

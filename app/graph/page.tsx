@@ -52,14 +52,14 @@ export default function SkillGraphPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-midnight relative">
+    <div className="flex flex-col md:flex-row min-h-screen bg-midnight relative">
       <Sidebar />
 
       {/* Main Command Workspace */}
-      <main className="flex-1 p-6 md:p-10 flex flex-col gap-8 max-w-7xl mx-auto w-full z-10">
+      <main className="flex-1 px-4 py-4 md:p-10 flex flex-col gap-6 md:gap-8 max-w-7xl mx-auto w-full z-10 pb-28 md:pb-10">
         
         {/* Header Profile Dashboard Overview */}
-        <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mt-10 md:mt-0">
+        <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4">
           <div className="flex flex-col gap-1">
             <div className="text-xs font-bold text-primary-blue uppercase tracking-widest flex items-center gap-1.5">
               <Sparkles size={12} className="animate-pulse" />
