@@ -98,6 +98,15 @@ export default function LoginPage() {
               icon={<KeyRound className="w-5 h-5" />}
             />
 
+            <div className="flex justify-end -mt-3 mb-2">
+              <Link
+                href="/forgot-password"
+                className="text-xs font-bold text-slate-500 hover:text-primary-blue transition-colors duration-200"
+              >
+                Lupa Password?
+              </Link>
+            </div>
+
             <NeonButton
               type="submit"
               loading={formLoading}

@@ -19,6 +19,9 @@ interface AuthState {
   initializeAuth: () => Promise<void>;
   login: (email: string, password: string) => Promise<any>;
   register: (email: string, username: string, password: string) => Promise<any>;
+  forgotPassword: (email: string) => Promise<any>;
+  verifyResetOtp: (email: string, otpCode: string) => Promise<any>;
+  resetPassword: (email: string, otpCode: string, newPassword: string, confirmPassword: string) => Promise<any>;
   logout: () => Promise<void>;
   setOnboardingStep: (step: string | null) => void;
   setCareerGoal: (goal: string | null) => void;
@@ -121,6 +124,42 @@ export const useAuthStore = create<AuthState>((set, get) => {
           username,
           password,
         });
+        set({ isLoading: false });
+        return res.data;
+      } catch (error: any) {
+        set({ isLoading: false });
+        throw error;
+      }
+    },
+
+    forgotPassword: async (email: string) => {
+      set({ isLoading: true });
+      try {
+        const res = await apiClient.post("/auth/forgot-password", { email });
+        set({ isLoading: false });
+        return res.data;
+      } catch (error: any) {
+        set({ isLoading: false });
+        throw error;
+      }
+    },
+
+    verifyResetOtp: async (email: string, otpCode: string) => {
+      set({ isLoading: true });
+      try {
+        const res = await apiClient.post("/auth/verify-reset-otp", { email, otpCode });
+        set({ isLoading: false });
+        return res.data;
+      } catch (error: any) {
+        set({ isLoading: false });
+        throw error;
+      }
+    },
+
+    resetPassword: async (email: string, otpCode: string, newPassword: string, confirmPassword: string) => {
+      set({ isLoading: true });
+      try {
+        const res = await apiClient.post("/auth/reset-password", { email, otpCode, newPassword, confirmPassword });
         set({ isLoading: false });
         return res.data;
       } catch (error: any) {
