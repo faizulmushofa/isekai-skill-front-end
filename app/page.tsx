@@ -97,6 +97,12 @@ export default function LandingPage() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <a 
+              href="mailto:developer@emuyforge.com" 
+              className="text-xs font-bold text-slate-500 hover:text-primary-blue transition-colors mr-2 hidden sm:inline-block"
+            >
+              Feedback Dev
+            </a>
             <Link href="/login">
               <NeonButton variant="ghost" className="text-sm font-bold px-4 py-2">
                 Masuk
@@ -104,7 +110,7 @@ export default function LandingPage() {
             </Link>
             <Link href="/register">
               <NeonButton className="text-sm font-bold px-5 py-2">
-                Masuki Gateway
+                Mulai
               </NeonButton>
             </Link>
           </div>
@@ -612,7 +618,7 @@ export default function LandingPage() {
           Masuki Aether. Bangun skill dari setiap aktivitas. Dan lihat bagaimana dirimu berevolusi menjadi versi yang lebih terstruktur, terarah, dan terukur.
         </p>
 
-        <Link href="/register">
+        <Link href="/login">
           <NeonButton className="text-base font-black px-10 py-4.5 shadow-md flex items-center gap-2 group">
             Masuki Aether Gateway
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform animate-pulse" />
@@ -637,14 +643,21 @@ export default function LandingPage() {
           </div>
 
           <div>
-            &copy; {new Date().getFullYear()} Aether System. Built with event-driven learning intelligence philosophy.
+            &copy; {new Date().getFullYear()} Aether System. Copyright by emuyforge company. Built with event-driven learning intelligence philosophy.
           </div>
 
-          <div className="flex items-center gap-4 font-bold">
+          <div className="flex items-center gap-4 font-bold flex-wrap justify-center">
             <a href="#value-prop" className="hover:text-primary-blue transition-colors">Value</a>
             <a href="#features" className="hover:text-primary-blue transition-colors">Fitur</a>
             <a href="#philosophy" className="hover:text-primary-blue transition-colors">Filosofi</a>
             <Link href="/login" className="hover:text-primary-blue transition-colors">Gateway</Link>
+            <a 
+              href="mailto:developer@emuyforge.com" 
+              className="bg-primary-blue/5 border border-primary-blue/15 hover:bg-primary-blue/10 hover:border-primary-blue/20 text-primary-blue text-xs font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-sm"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+              Feedback Dev
+            </a>
           </div>
         </div>
       </footer>
