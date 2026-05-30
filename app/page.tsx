@@ -21,7 +21,10 @@ import {
   ArrowRight,
   HelpCircle,
   Play,
-  ArrowUpRight
+  ArrowUpRight,
+  X,
+  Mail,
+  CheckCircle
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -29,6 +32,33 @@ export default function LandingPage() {
   const { isAuthenticated, isLoading, initializeAuth } = useAuthStore();
   const [activeTab, setActiveTab] = useState<"journal" | "project" | "quiz">("journal");
   const [terminalStep, setTerminalStep] = useState(0);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [feedbackName, setFeedbackName] = useState("");
+  const [feedbackEmail, setFeedbackEmail] = useState("");
+  const [feedbackType, setFeedbackType] = useState<"bug" | "suggestion">("bug");
+  const [feedbackMsg, setFeedbackMsg] = useState("");
+  const [feedbackSuccess, setFeedbackSuccess] = useState(false);
+
+  const handleFeedbackSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!feedbackName.trim() || !feedbackEmail.trim() || !feedbackMsg.trim()) return;
+
+    setFeedbackSuccess(true);
+
+    const mailtoUrl = `mailto:emuyforge@gmail.com?subject=[AETHER FEEDBACK - ${feedbackType.toUpperCase()}]&body=Nama: ${encodeURIComponent(feedbackName)}%0AEmail: ${encodeURIComponent(feedbackEmail)}%0ATipe: ${encodeURIComponent(feedbackType === "bug" ? "Bug/Error" : "Saran Fitur")}%0A%0APesan:%0A${encodeURIComponent(feedbackMsg)}`;
+
+    setTimeout(() => {
+      window.location.href = mailtoUrl;
+    }, 1200);
+
+    setTimeout(() => {
+      setIsFeedbackOpen(false);
+      setFeedbackSuccess(false);
+      setFeedbackName("");
+      setFeedbackEmail("");
+      setFeedbackMsg("");
+    }, 3500);
+  };
 
   useEffect(() => {
     initializeAuth();
@@ -97,12 +127,12 @@ export default function LandingPage() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a 
-              href="mailto:developer@emuyforge.com" 
-              className="text-xs font-bold text-slate-500 hover:text-primary-blue transition-colors mr-2 hidden sm:inline-block"
+            <button 
+              onClick={() => setIsFeedbackOpen(true)}
+              className="text-xs font-bold text-slate-500 hover:text-primary-blue transition-colors mr-2 hidden sm:inline-block cursor-pointer bg-transparent border-none outline-none"
             >
               Feedback Dev
-            </a>
+            </button>
             <Link href="/login">
               <NeonButton variant="ghost" className="text-sm font-bold px-4 py-2">
                 Masuk
@@ -627,40 +657,179 @@ export default function LandingPage() {
       </section>
 
       {/* ── FOOTER ─────────────────────────── */}
-      <footer className="relative z-10 border-t border-slate-200/60 bg-white/50 backdrop-blur-sm py-12 text-center text-xs text-slate-400 font-medium">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-xs overflow-hidden shrink-0">
-              <Image
-                src="/logo.png"
-                alt="Aether Logo Footer"
-                width={28}
-                height={28}
-                className="shrink-0 object-contain filter contrast-105 saturate-110"
-              />
+      <footer className="relative z-10 border-t border-slate-200/80 bg-white/60 backdrop-blur-md py-16 text-xs text-slate-500 font-medium">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-start mb-12">
+          {/* Column 1: Brand Info */}
+          <div className="flex flex-col gap-3 items-center md:items-start text-center md:text-left">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm overflow-hidden shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="Aether Footer Logo"
+                  width={28}
+                  height={28}
+                  className="shrink-0 object-contain filter contrast-105 saturate-110"
+                />
+              </div>
+              <span className="font-bold text-slate-900 text-lg tracking-wider font-outfit animate-pulse">AETHER</span>
             </div>
-            <span className="font-bold text-slate-600 tracking-wider font-outfit">AETHER</span>
+            <p className="text-slate-400 font-semibold max-w-xs leading-relaxed">
+              AI-driven learning intelligence system yang mengubah aktivitas manusia menjadi perkembangan skill yang hidup.
+            </p>
           </div>
 
-          <div>
-            &copy; {new Date().getFullYear()} Aether System. Copyright by emuyforge company. Built with event-driven learning intelligence philosophy.
+          {/* Column 2: Navigation Links */}
+          <div className="flex flex-col gap-3 items-center text-center">
+            <span className="font-black text-slate-900 uppercase tracking-widest text-[10px] font-outfit">Navigasi</span>
+            <div className="flex flex-col gap-2 font-bold text-slate-650">
+              <a href="#value-prop" className="hover:text-primary-blue transition-colors">Value Proposition</a>
+              <a href="#features" className="hover:text-primary-blue transition-colors">Fitur Utama</a>
+              <a href="#philosophy" className="hover:text-primary-blue transition-colors">Filosofi Inti</a>
+            </div>
           </div>
 
-          <div className="flex items-center gap-4 font-bold flex-wrap justify-center">
-            <a href="#value-prop" className="hover:text-primary-blue transition-colors">Value</a>
-            <a href="#features" className="hover:text-primary-blue transition-colors">Fitur</a>
-            <a href="#philosophy" className="hover:text-primary-blue transition-colors">Filosofi</a>
-            <Link href="/login" className="hover:text-primary-blue transition-colors">Gateway</Link>
-            <a 
-              href="mailto:developer@emuyforge.com" 
-              className="bg-primary-blue/5 border border-primary-blue/15 hover:bg-primary-blue/10 hover:border-primary-blue/20 text-primary-blue text-xs font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-sm"
+          {/* Column 3: Corporate Info & Feedback */}
+          <div className="flex flex-col gap-4 items-center md:items-end text-center md:text-right">
+            <div className="flex flex-col gap-1 items-center md:items-end">
+              <span className="font-black text-slate-900 uppercase tracking-widest text-[10px] font-outfit">Company</span>
+              <span className="font-bold text-slate-700">emuyforge company</span>
+            </div>
+
+            {/* Public Feedback Dev UI Trigger */}
+            <button
+              onClick={() => setIsFeedbackOpen(true)}
+              className="bg-primary-blue/5 border border-primary-blue/15 hover:bg-primary-blue/10 hover:border-primary-blue/20 text-primary-blue text-xs font-black px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-              Feedback Dev
-            </a>
+              Feedback Developer
+            </button>
+          </div>
+        </div>
+
+        {/* Bottom Copyright Bar */}
+        <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-200/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+          <div className="text-center sm:text-left">
+            &copy; {new Date().getFullYear()} Aether System. Built with event-driven learning intelligence philosophy.
+          </div>
+          <div className="text-center sm:text-right">
+            Copyright by emuyforge company. All rights reserved.
           </div>
         </div>
       </footer>
+
+      {/* ── DEVELOPER FEEDBACK MODAL (UI KHUSUS LANDING PAGE) ─────────────────────────── */}
+      {isFeedbackOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fadeIn">
+          {/* Backdrop Click to Close */}
+          <div className="absolute inset-0" onClick={() => setIsFeedbackOpen(false)} />
+          
+          <div className="bg-white border border-primary-blue/10 rounded-3xl p-6 md:p-8 shadow-2xl max-w-md w-full relative z-10 animate-scaleIn">
+            {/* Close Button */}
+            <button 
+              onClick={() => setIsFeedbackOpen(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-full bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+
+            {feedbackSuccess ? (
+              <div className="flex flex-col items-center text-center py-8 space-y-4">
+                <div className="w-16 h-16 bg-green-50 border border-green-200 rounded-full flex items-center justify-center text-green-500 mb-2 animate-bounce">
+                  <CheckCircle size={32} />
+                </div>
+                <h3 className="font-outfit font-black text-xl text-slate-900">Pesan Diformat!</h3>
+                <p className="text-sm text-slate-600 font-medium leading-relaxed px-2">
+                  Terima kasih! Kami sedang menyiapkan draf feedback dan membuka aplikasi email Anda untuk mengirimkannya ke tim developer kami di <span className="text-primary-blue font-bold">emuyforge company (emuyforge@gmail.com)</span>.
+                </p>
+                <div className="text-[10px] text-slate-400 font-bold animate-pulse mt-4">
+                  Mengalihkan ke Email Client...
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleFeedbackSubmit} className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <div className="text-xs font-black text-primary-blue uppercase tracking-widest flex items-center gap-1.5">
+                    <Sparkles size={12} className="animate-pulse" />
+                    DEVELOPER PORTAL
+                  </div>
+                  <h3 className="text-xl font-black text-slate-900 font-outfit">Kirim Feedback Dev</h3>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Saran, kritik, atau bug report untuk pengembang Aether.
+                  </p>
+                </div>
+
+                <div className="flex gap-2 bg-slate-100 p-1 rounded-xl border border-slate-200/50 mt-1">
+                  <button
+                    type="button"
+                    onClick={() => setFeedbackType('bug')}
+                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                      feedbackType === 'bug' 
+                        ? "bg-white text-red-500 shadow-sm" 
+                        : "text-slate-500 hover:text-slate-700"
+                    }`}
+                  >
+                    Bug / Error
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFeedbackType('suggestion')}
+                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                      feedbackType === 'suggestion' 
+                        ? "bg-white text-primary-blue shadow-sm" 
+                        : "text-slate-500 hover:text-slate-700"
+                    }`}
+                  >
+                    Saran Fitur
+                  </button>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="feedbackName" className="text-xs font-bold text-slate-500">Nama Anda</label>
+                  <input
+                    type="text"
+                    id="feedbackName"
+                    value={feedbackName}
+                    onChange={(e) => setFeedbackName(e.target.value)}
+                    placeholder="Masukkan nama Anda"
+                    required
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-850 focus:outline-none focus:border-primary-blue/40 font-semibold"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="feedbackEmail" className="text-xs font-bold text-slate-500">Email Anda</label>
+                  <input
+                    type="email"
+                    id="feedbackEmail"
+                    value={feedbackEmail}
+                    onChange={(e) => setFeedbackEmail(e.target.value)}
+                    placeholder="nama@email.com"
+                    required
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-850 focus:outline-none focus:border-primary-blue/40 font-semibold"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="feedbackMsg" className="text-xs font-bold text-slate-500">Detail Laporan / Pesan</label>
+                  <textarea
+                    id="feedbackMsg"
+                    value={feedbackMsg}
+                    onChange={(e) => setFeedbackMsg(e.target.value)}
+                    placeholder={feedbackType === "bug" ? "Jelaskan bug atau error yang Anda alami..." : "Tuliskan saran fitur baru Anda..."}
+                    required
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-850 focus:outline-none focus:border-primary-blue/40 resize-none h-24 font-semibold"
+                  />
+                </div>
+
+                <NeonButton type="submit" className="w-full py-3 mt-2 font-bold text-sm flex items-center justify-center gap-2">
+                  <Mail size={16} />
+                  Buka Email & Kirim
+                </NeonButton>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
 
     </div>
   );
