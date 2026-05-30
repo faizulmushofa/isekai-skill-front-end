@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -77,7 +78,7 @@ export default function Sidebar() {
               >
                 <div
                   className={`p-1.5 rounded-xl transition-all duration-200 ${
-                    isActive
+                     isActive
                       ? "bg-primary-blue/10 shadow-sm"
                       : ""
                   }`}
@@ -161,7 +162,7 @@ export default function Sidebar() {
                   </div>
                   <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-primary-blue to-soft-cyan rounded-full transition-all duration-500"
+                      className="h-full bg-gradient-to-r from-primary-blue to-soft-cyan rounded-full transition-all duration-550"
                       style={{ width: `${xpPercent}%` }}
                     />
                   </div>
@@ -199,7 +200,14 @@ export default function Sidebar() {
           {/* Logo Title */}
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-3 h-10">
-              <Sparkles size={20} className="text-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.25)]" />
+              <Image
+                src="/logo.png"
+                alt="Aether Logo"
+                width={36}
+                height={36}
+                priority
+                className="shrink-0 object-contain drop-shadow-[0_0_12px_rgba(14,165,233,0.3)] filter contrast-110"
+              />
               <AnimatePresence>
                 {!isCollapsed && (
                   <motion.div

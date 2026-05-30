@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuthStore } from "@/stores/useAuthStore";
 import GlowInput from "@/components/ui/GlowInput";
 import NeonButton from "@/components/ui/NeonButton";
@@ -65,6 +66,14 @@ export default function RegisterPage() {
         <GlassCard hoverGlow={false} className="border border-primary-blue/10 p-8 shadow-xl relative bg-white rounded-2xl">
           {/* Header */}
           <div className="flex flex-col items-center gap-2 mb-8 text-center">
+            <Image
+              src="/logo.png"
+              alt="Aether Logo"
+              width={80}
+              height={80}
+              priority
+              className="mb-3 shrink-0 object-contain drop-shadow-[0_0_20px_rgba(14,165,233,0.3)] filter contrast-110"
+            />
             <h1 className="text-3xl font-black tracking-wider text-primary-blue font-outfit">
               ✦ CREATE IDENTITY ✦
             </h1>
