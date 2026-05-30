@@ -131,7 +131,7 @@ export default function ForgotPasswordPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 id="email"
-                className="text-slate-850"
+                className="text-slate-800"
                 icon={<Mail className="w-5 h-5" />}
               />
               <NeonButton
@@ -160,7 +160,7 @@ export default function ForgotPasswordPage() {
                 required
                 id="otpCode"
                 maxLength={6}
-                className="text-slate-850 tracking-widest font-mono text-center"
+                className="text-slate-800 tracking-widest font-mono text-center"
                 icon={<Hash className="w-5 h-5" />}
               />
               <NeonButton
@@ -195,7 +195,7 @@ export default function ForgotPasswordPage() {
                 required
                 minLength={6}
                 id="newPassword"
-                className="text-slate-850"
+                className="text-slate-800"
                 icon={<KeyRound className="w-5 h-5" />}
               />
               <GlowInput
@@ -207,7 +207,7 @@ export default function ForgotPasswordPage() {
                 required
                 minLength={6}
                 id="confirmPassword"
-                className="text-slate-850"
+                className="text-slate-800"
                 icon={<KeyRound className="w-5 h-5" />}
               />
               <NeonButton

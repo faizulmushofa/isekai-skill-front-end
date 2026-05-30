@@ -82,7 +82,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               id="email"
-              className="text-slate-850"
+              className="text-slate-800"
               icon={<Mail className="w-5 h-5" />}
             />
 
@@ -94,7 +94,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               id="password"
-              className="text-slate-850"
+              className="text-slate-800"
               icon={<KeyRound className="w-5 h-5" />}
             />
 
