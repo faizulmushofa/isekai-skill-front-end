@@ -20,7 +20,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/");
+      router.push("/dashboard");
     }
   }, [isAuthenticated, router]);
 
@@ -31,7 +31,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      router.push("/");
+      router.push("/dashboard");
     } catch (err: any) {
       const errorMsg = err.response?.data?.message;
       if (errorMsg === "Please verify your email first") {

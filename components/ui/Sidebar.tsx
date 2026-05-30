@@ -28,7 +28,7 @@ export default function Sidebar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { name: "Dashboard", href: "/", icon: LayoutDashboard },
+    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Skill Tree", href: "/graph", icon: GitBranch },
     { name: "Quiz", href: "/quiz", icon: Sword },
     { name: "Projects", href: "/projects", icon: FolderGit2 },

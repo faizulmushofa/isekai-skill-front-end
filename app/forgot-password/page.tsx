@@ -24,7 +24,7 @@ export default function ForgotPasswordPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/");
+      router.push("/dashboard");
     }
   }, [isAuthenticated, router]);
 
