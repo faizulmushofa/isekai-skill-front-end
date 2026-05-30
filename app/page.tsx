@@ -657,42 +657,60 @@ export default function LandingPage() {
       </section>
 
       {/* ── FOOTER ─────────────────────────── */}
-      <footer className="relative z-10 border-t border-slate-200/80 bg-white/60 backdrop-blur-md py-16 text-xs text-slate-500 font-medium">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-start mb-12">
+      <footer className="relative z-10 border-t border-slate-200/80 bg-white/40 backdrop-blur-md py-16 md:py-20 text-xs text-slate-500 font-medium">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 items-start mb-16">
           {/* Column 1: Brand Info */}
-          <div className="flex flex-col gap-3 items-center md:items-start text-center md:text-left">
+          <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm overflow-hidden shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center shadow-xs overflow-hidden shrink-0">
                 <Image
                   src="/logo.png"
                   alt="Aether Footer Logo"
-                  width={28}
-                  height={28}
+                  width={30}
+                  height={30}
                   className="shrink-0 object-contain filter contrast-105 saturate-110"
                 />
               </div>
-              <span className="font-bold text-slate-900 text-lg tracking-wider font-outfit animate-pulse">AETHER</span>
+              <span className="font-black text-slate-900 text-xl tracking-wider font-outfit">AETHER</span>
             </div>
-            <p className="text-slate-400 font-semibold max-w-xs leading-relaxed">
+            <p className="text-slate-400 font-semibold max-w-xs leading-relaxed text-[11px]">
               AI-driven learning intelligence system yang mengubah aktivitas manusia menjadi perkembangan skill yang hidup.
             </p>
-          </div>
-
-          {/* Column 2: Navigation Links */}
-          <div className="flex flex-col gap-3 items-center text-center">
-            <span className="font-black text-slate-900 uppercase tracking-widest text-[10px] font-outfit">Navigasi</span>
-            <div className="flex flex-col gap-2 font-bold text-slate-650">
-              <a href="#value-prop" className="hover:text-primary-blue transition-colors">Value Proposition</a>
-              <a href="#features" className="hover:text-primary-blue transition-colors">Fitur Utama</a>
-              <a href="#philosophy" className="hover:text-primary-blue transition-colors">Filosofi Inti</a>
+            {/* Operational Status Indicator */}
+            <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-150 px-3 py-1 rounded-full text-[10px] font-bold text-emerald-600 shadow-2xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Sistem Operasional
             </div>
           </div>
 
-          {/* Column 3: Corporate Info & Feedback */}
-          <div className="flex flex-col gap-4 items-center md:items-end text-center md:text-right">
-            <div className="flex flex-col gap-1 items-center md:items-end">
-              <span className="font-black text-slate-900 uppercase tracking-widest text-[10px] font-outfit">Company</span>
-              <span className="font-bold text-slate-700">emuyforge company</span>
+          {/* Column 2: System Features */}
+          <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left">
+            <span className="font-black text-slate-950 uppercase tracking-[0.15em] text-[10px] font-outfit">Sistem Core</span>
+            <div className="flex flex-col gap-2.5 font-bold text-slate-400">
+              <a href="#features" className="hover:text-primary-blue transition-colors">Ingestion Layer</a>
+              <a href="#features" className="hover:text-primary-blue transition-colors">AI Processing Engine</a>
+              <a href="#features" className="hover:text-primary-blue transition-colors">Skill Graph Tree</a>
+              <a href="#features" className="hover:text-primary-blue transition-colors">Career Progression</a>
+            </div>
+          </div>
+
+          {/* Column 3: Navigation Links */}
+          <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left">
+            <span className="font-black text-slate-950 uppercase tracking-[0.15em] text-[10px] font-outfit">Navigasi</span>
+            <div className="flex flex-col gap-2.5 font-bold text-slate-400">
+              <a href="#value-prop" className="hover:text-primary-blue transition-colors">Value Proposition</a>
+              <a href="#philosophy" className="hover:text-primary-blue transition-colors">Filosofi Inti</a>
+              <Link href="/login" className="hover:text-primary-blue transition-colors">Gateway Masuk</Link>
+              <Link href="/register" className="hover:text-primary-blue transition-colors">Mulai Evolusi</Link>
+            </div>
+          </div>
+
+          {/* Column 4: Corporate Info & Feedback */}
+          <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left">
+            <div className="flex flex-col gap-1 items-center md:items-start">
+              <span className="font-black text-slate-950 uppercase tracking-[0.15em] text-[10px] font-outfit">Developer</span>
+              <span className="font-bold text-slate-800 text-sm">emuyforge company</span>
+              <a href="mailto:emuyforge@gmail.com" className="text-slate-400 font-bold hover:text-primary-blue transition-colors">emuyforge@gmail.com</a>
             </div>
 
             {/* Public Feedback Dev UI Trigger */}
@@ -707,12 +725,12 @@ export default function LandingPage() {
         </div>
 
         {/* Bottom Copyright Bar */}
-        <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-200/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
-          <div className="text-center sm:text-left">
+        <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-200/60 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] text-slate-450 font-bold uppercase tracking-wider">
+          <div className="text-center md:text-left">
             &copy; {new Date().getFullYear()} Aether System. Built with event-driven learning intelligence philosophy.
           </div>
-          <div className="text-center sm:text-right">
-            Copyright by emuyforge company. All rights reserved.
+          <div className="text-center md:text-right">
+            A project by emuyforge company. All rights reserved.
           </div>
         </div>
       </footer>
