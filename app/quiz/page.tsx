@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useQuizStore } from "@/stores/useQuizStore";
 import Sidebar from "@/components/ui/Sidebar";
@@ -72,14 +73,27 @@ export default function QuizPage() {
         <div className="w-full max-w-7xl mx-auto flex-1 flex flex-col gap-4">
           {/* Header */}
           <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:mt-6">
-            <div className="flex flex-col gap-1">
-              <span className="text-xs font-bold text-sky-blue uppercase tracking-widest flex items-center gap-1.5">
-                <Sword size={12} />
-                ARENA TANTANGAN KEMAMPUAN AI
-              </span>
-              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 font-outfit">
-                Quiz Arena
-              </h1>
+            <div className="flex items-center gap-3">
+              {/* Mobile-only brand logo wrapper */}
+              <div className="md:hidden w-11 h-11 rounded-2xl bg-white border border-primary-blue/10 flex items-center justify-center p-1.5 shrink-0 shadow-sm drop-shadow-[0_0_8px_rgba(14,165,233,0.15)]">
+                <Image
+                  src="/logo.png"
+                  alt="Aether Logo"
+                  width={28}
+                  height={28}
+                  className="object-contain"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <span className="text-xs font-bold text-sky-blue uppercase tracking-widest flex items-center gap-1.5">
+                  <Sword size={12} />
+                  ARENA TANTANGAN KEMAMPUAN AI
+                </span>
+                <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 font-outfit">
+                  Quiz Arena
+                </h1>
+              </div>
             </div>
 
             <button

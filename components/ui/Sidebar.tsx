@@ -184,9 +184,13 @@ export default function Sidebar() {
 
       {/* ── DESKTOP: Persistent Sidebar ────────────────────────────── */}
       <motion.aside
-        animate={{ width: isCollapsed ? 88 : 280 }}
+        animate={{ 
+          width: isCollapsed ? 80 : 280,
+          paddingLeft: isCollapsed ? 16 : 24,
+          paddingRight: isCollapsed ? 16 : 24
+        }}
         transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-        className="hidden md:flex flex-col justify-between h-screen sticky top-0 left-0 bg-white/45 backdrop-blur-xl border-r border-primary-blue/10 p-6 z-30 overflow-hidden shadow-[4px_0_24px_rgba(59,130,246,0.02)]"
+        className="hidden md:flex flex-col justify-between h-screen sticky top-0 left-0 bg-white/45 backdrop-blur-xl border-r border-primary-blue/10 py-6 z-30 overflow-hidden shadow-[4px_0_24px_rgba(59,130,246,0.02)]"
       >
         {/* Toggle Collapse Trigger */}
         <button
@@ -199,14 +203,14 @@ export default function Sidebar() {
         <div className="flex flex-col gap-10">
           {/* Logo Title */}
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-3 h-10">
+            <div className="flex items-center gap-3 h-12">
               <Image
                 src="/logo.png"
                 alt="Aether Logo"
-                width={36}
-                height={36}
+                width={44}
+                height={44}
                 priority
-                className="shrink-0 object-contain drop-shadow-[0_0_12px_rgba(14,165,233,0.3)] filter contrast-110"
+                className="shrink-0 object-contain drop-shadow-[0_0_12px_rgba(14,165,233,0.35)] filter contrast-110"
               />
               <AnimatePresence>
                 {!isCollapsed && (
