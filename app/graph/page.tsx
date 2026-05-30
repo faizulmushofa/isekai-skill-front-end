@@ -63,13 +63,13 @@ export default function SkillGraphPage() {
           <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4">
             <div className="flex items-center gap-3">
               {/* Mobile-only brand logo wrapper */}
-              <div className="md:hidden w-11 h-11 rounded-2xl bg-white border border-primary-blue/10 flex items-center justify-center p-1.5 shrink-0 shadow-sm drop-shadow-[0_0_8px_rgba(14,165,233,0.15)]">
+              <div className="md:hidden w-12 h-12 rounded-2xl bg-white border border-primary-blue/10 flex items-center justify-center shrink-0 shadow-sm drop-shadow-[0_0_10px_rgba(14,165,233,0.15)] overflow-hidden">
                 <Image
                   src="/logo.png"
                   alt="Aether Logo"
-                  width={28}
-                  height={28}
-                  className="object-contain"
+                  width={96}
+                  height={96}
+                  className="shrink-0 object-contain drop-shadow-[0_0_12px_rgba(14,165,233,0.25)] filter contrast-110"
                 />
               </div>
 

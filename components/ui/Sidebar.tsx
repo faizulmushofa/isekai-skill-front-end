@@ -204,14 +204,16 @@ export default function Sidebar() {
           {/* Logo Title */}
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-3 h-12">
-              <Image
-                src="/logo.png"
-                alt="Aether Logo"
-                width={44}
-                height={44}
-                priority
-                className="shrink-0 object-contain drop-shadow-[0_0_12px_rgba(14,165,233,0.35)] filter contrast-110"
-              />
+              <div className="w-12 h-12 flex items-center justify-center shrink-0 overflow-hidden relative">
+                <Image
+                  src="/logo.png"
+                  alt="Aether Logo"
+                  width={96}
+                  height={96}
+                  priority
+                  className="shrink-0 object-contain drop-shadow-[0_0_15px_rgba(14,165,233,0.4)] filter contrast-110"
+                />
+              </div>
               <AnimatePresence>
                 {!isCollapsed && (
                   <motion.div
