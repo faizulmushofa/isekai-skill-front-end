@@ -116,6 +116,17 @@ export function useProjects() {
     setOrchResult(null);
   };
 
+  const deleteProject = async (projectId: string) => {
+    if (!confirm("Apakah Anda yakin ingin menghapus proyek ini?")) return;
+    try {
+      await apiClient.delete(`/projects/${projectId}`);
+      setProjects((prev) => prev.filter((p) => p.id !== projectId));
+      setLatestScanResult(null);
+    } catch (err: any) {
+      alert("Gagal menghapus proyek: " + (err.response?.data?.message || err.message));
+    }
+  };
+
   return {
     projects,
     loading,
@@ -148,5 +159,6 @@ export function useProjects() {
     orchestrateProject,
     openOrchestrate,
     closeOrchestrate,
+    deleteProject,
   };
 }

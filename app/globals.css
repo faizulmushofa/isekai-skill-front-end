@@ -17,6 +17,10 @@
   --foreground: #0f172a;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background-color: #f8fafc;
   background-image: 

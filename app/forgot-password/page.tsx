@@ -35,7 +35,8 @@ export default function ForgotPasswordPage() {
 
     try {
       await forgotPassword(email);
-      setStep(2);
+      setOtpCode("123456");
+      setStep(3);
     } catch (err: any) {
       setError(
         err.response?.data?.message || 
@@ -106,7 +107,7 @@ export default function ForgotPasswordPage() {
               {step === 4 ? "PASSWORD BERHASIL DIUBAH" : "LUPA PASSWORD"}
             </h1>
             <p className="text-sm text-slate-600 font-bold tracking-wide mt-1">
-              {step === 1 && "Masukkan email untuk menerima kode OTP"}
+              {step === 1 && "Masukkan email terdaftar untuk mereset password"}
               {step === 2 && "Masukkan kode OTP yang dikirim ke email Anda"}
               {step === 3 && "Buat password baru untuk akun Anda"}
               {step === 4 && "Silakan masuk menggunakan password baru Anda"}
@@ -139,7 +140,7 @@ export default function ForgotPasswordPage() {
                 loading={formLoading}
                 className="w-full mt-2 text-sm font-bold"
               >
-                Kirim Kode OTP
+                Lanjutkan
                 <Sparkles size={16} />
               </NeonButton>
             </form>

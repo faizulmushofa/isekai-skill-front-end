@@ -34,10 +34,6 @@ export default function LoginPage() {
       router.push("/dashboard");
     } catch (err: any) {
       const errorMsg = err.response?.data?.message;
-      if (errorMsg === "Please verify your email first") {
-        router.push(`/verify-otp?email=${encodeURIComponent(email)}`);
-        return;
-      }
       setError(
         errorMsg || 
         "Gagal masuk. Silakan periksa kembali email dan kata sandi Anda."

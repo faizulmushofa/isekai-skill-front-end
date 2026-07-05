@@ -10,7 +10,7 @@ import GlassCard from "@/components/ui/GlassCard";
 import NeonButton from "@/components/ui/NeonButton";
 import AddProjectModal from "@/components/project/AddProjectModal";
 import OrchestrateModal from "@/components/project/OrchestrateModal";
-import { FolderGit2, Plus, ArrowUpRight, CheckCircle } from "lucide-react";
+import { FolderGit2, Plus, ArrowUpRight, CheckCircle, Trash2 } from "lucide-react";
 
 export default function ProjectsPage() {
   const router = useRouter();
@@ -110,9 +110,18 @@ export default function ProjectsPage() {
                       <div className="w-10 h-10 rounded-xl bg-primary-blue/15 border border-primary-blue/20 flex items-center justify-center text-primary-blue shrink-0">
                         <FolderGit2 size={20} />
                       </div>
-                      <span className="text-[10px] text-slate-500 font-bold bg-slate-50 px-2.5 py-1 rounded-full border border-slate-200 truncate max-w-[150px]">
-                        {project.repositoryUrl ? "Git Repository" : "File Upload"}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] text-slate-500 font-bold bg-slate-50 px-2.5 py-1 rounded-full border border-slate-200 truncate max-w-[150px]">
+                          {project.repositoryUrl ? "Git Repository" : "File Upload"}
+                        </span>
+                        <button
+                          onClick={() => p.deleteProject(project.id)}
+                          className="p-1 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                          title="Hapus Proyek"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </div>
                     <div>
                       <h3 className="font-extrabold text-slate-900 text-base tracking-wide leading-snug font-outfit">

@@ -2,7 +2,7 @@
 
 import React from "react";
 import GlassCard from "@/components/ui/GlassCard";
-import { Upload, FileText, Calendar, ChevronRight } from "lucide-react";
+import { Upload, FileText, Calendar, ChevronRight, Trash2 } from "lucide-react";
 
 interface JournalSidebarListProps {
   j: any;
@@ -78,13 +78,25 @@ export default function JournalSidebarList({ j }: JournalSidebarListProps) {
               <FileText size={18} className="text-primary-blue shrink-0" />
               <div className="flex flex-col gap-0.5 min-w-0">
                 <span className="text-xs font-bold text-slate-800 truncate">{journal.title}</span>
-                <span className="text-[9px] text-slate-500 flex items-center gap-1 font-semibold">
+                <span className="text-[9px] text-slate-550 flex items-center gap-1 font-semibold">
                   <Calendar size={10} />
                   {new Date(journal.createdAt).toLocaleDateString("id-ID")}
                 </span>
               </div>
             </div>
-            <ChevronRight size={14} className="text-slate-500 shrink-0" />
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  j.deleteJournal(journal.id);
+                }}
+                className="p-1 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                title="Hapus Jurnal"
+              >
+                <Trash2 size={13} />
+              </button>
+              <ChevronRight size={14} className="text-slate-500" />
+            </div>
           </div>
         ))}
       </GlassCard>

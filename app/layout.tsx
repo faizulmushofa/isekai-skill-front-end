@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
-import FeedbackWidget from "@/components/ui/FeedbackWidget";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -27,15 +26,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-outfit bg-midnight text-slate-900 relative">
-        {/* Subtle Cybernetic Lighting Gradients */}
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-glow-blue opacity-50 pointer-events-none" />
-        <div className="absolute bottom-[20%] right-[-10%] w-[50%] h-[50%] bg-glow-cyan opacity-40 pointer-events-none" />
+    <html lang="en" className={`${outfit.variable} h-full antialiased overflow-x-hidden`}>
+      <body className="min-h-full flex flex-col font-outfit bg-midnight text-slate-900 relative overflow-x-hidden">
+        {/* Subtle Cybernetic Lighting Gradients - contained within viewport */}
+        <div className="fixed top-0 left-0 w-[40%] h-[40%] bg-glow-blue opacity-30 pointer-events-none blur-3xl" />
+        <div className="fixed bottom-[20%] right-0 w-[40%] h-[40%] bg-glow-cyan opacity-25 pointer-events-none blur-3xl" />
         
         <Providers>
           {children}
-          <FeedbackWidget />
         </Providers>
       </body>
     </html>

@@ -22,8 +22,6 @@ import {
   HelpCircle,
   Play,
   ArrowUpRight,
-  X,
-  Mail,
   CheckCircle
 } from "lucide-react";
 
@@ -32,33 +30,6 @@ export default function LandingPage() {
   const { isAuthenticated, isLoading, initializeAuth } = useAuthStore();
   const [activeTab, setActiveTab] = useState<"journal" | "project" | "quiz">("journal");
   const [terminalStep, setTerminalStep] = useState(0);
-  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-  const [feedbackName, setFeedbackName] = useState("");
-  const [feedbackEmail, setFeedbackEmail] = useState("");
-  const [feedbackType, setFeedbackType] = useState<"bug" | "suggestion">("bug");
-  const [feedbackMsg, setFeedbackMsg] = useState("");
-  const [feedbackSuccess, setFeedbackSuccess] = useState(false);
-
-  const handleFeedbackSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!feedbackName.trim() || !feedbackEmail.trim() || !feedbackMsg.trim()) return;
-
-    setFeedbackSuccess(true);
-
-    const mailtoUrl = `mailto:emuyforge@gmail.com?subject=[AETHER FEEDBACK - ${feedbackType.toUpperCase()}]&body=Nama: ${encodeURIComponent(feedbackName)}%0AEmail: ${encodeURIComponent(feedbackEmail)}%0ATipe: ${encodeURIComponent(feedbackType === "bug" ? "Bug/Error" : "Saran Fitur")}%0A%0APesan:%0A${encodeURIComponent(feedbackMsg)}`;
-
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-    }, 1200);
-
-    setTimeout(() => {
-      setIsFeedbackOpen(false);
-      setFeedbackSuccess(false);
-      setFeedbackName("");
-      setFeedbackEmail("");
-      setFeedbackMsg("");
-    }, 3500);
-  };
 
   useEffect(() => {
     initializeAuth();
@@ -94,18 +65,18 @@ export default function LandingPage() {
   if (isAuthenticated) return null;
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-800 font-outfit relative overflow-hidden">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-800 font-outfit relative overflow-x-hidden">
       
       {/* Background Radial Orbs (Matches globals.css body design) */}
-      <div className="absolute top-0 left-0 right-0 h-[800px] bg-gradient-to-b from-primary-blue/[0.03] via-soft-cyan/[0.02] to-transparent pointer-events-none z-0" />
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-blue/[0.04] blur-3xl pointer-events-none rounded-full z-0" />
-      <div className="absolute top-1/2 right-10 translate-x-1/3 w-[500px] h-[500px] bg-soft-cyan/[0.03] blur-3xl pointer-events-none rounded-full z-0" />
+      <div className="absolute top-0 left-0 right-0 h-[400px] md:h-[800px] bg-gradient-to-b from-primary-blue/[0.03] via-soft-cyan/[0.02] to-transparent pointer-events-none z-0" />
+      <div className="absolute top-1/4 left-0 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-primary-blue/[0.04] blur-3xl pointer-events-none rounded-full z-0" />
+      <div className="absolute top-1/2 right-0 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-soft-cyan/[0.03] blur-3xl pointer-events-none rounded-full z-0" />
 
       {/* ── HEADER ─────────────────────────── */}
       <header className="sticky top-0 z-40 bg-white/70 backdrop-blur-md border-b border-primary-blue/10 w-full transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-white border border-primary-blue/10 flex items-center justify-center shadow-sm relative overflow-hidden shrink-0 group">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white border border-primary-blue/10 flex items-center justify-center shadow-sm relative overflow-hidden shrink-0 group">
               <Image
                 src="/logo.png"
                 alt="Aether Logo"
@@ -114,32 +85,26 @@ export default function LandingPage() {
                 className="shrink-0 object-contain drop-shadow-[0_0_8px_rgba(37,99,235,0.2)] group-hover:scale-110 transition-transform duration-300"
               />
             </div>
-            <span className="text-xl font-black tracking-wider text-slate-900 font-outfit">
+            <span className="text-lg sm:text-xl font-black tracking-wider text-slate-900 font-outfit">
               AETHER
             </span>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-500">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-bold text-slate-500">
             <a href="#value-prop" className="hover:text-primary-blue transition-colors">Value Proposition</a>
             <a href="#philosophy" className="hover:text-primary-blue transition-colors">Filosofi</a>
             <a href="#features" className="hover:text-primary-blue transition-colors">Fitur Utama</a>
             <a href="#pipeline" className="hover:text-primary-blue transition-colors">Pipeline</a>
           </nav>
 
-          <div className="flex items-center gap-3">
-            <button 
-              onClick={() => setIsFeedbackOpen(true)}
-              className="text-xs font-bold text-slate-500 hover:text-primary-blue transition-colors mr-2 hidden sm:inline-block cursor-pointer bg-transparent border-none outline-none"
-            >
-              Feedback Dev
-            </button>
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             <Link href="/login">
-              <NeonButton variant="ghost" className="text-sm font-bold px-4 py-2">
+              <NeonButton variant="ghost" className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-2">
                 Masuk
               </NeonButton>
             </Link>
             <Link href="/register">
-              <NeonButton className="text-sm font-bold px-5 py-2">
+              <NeonButton className="text-xs sm:text-sm font-bold px-3 sm:px-5 py-2">
                 Mulai
               </NeonButton>
             </Link>
@@ -148,7 +113,7 @@ export default function LandingPage() {
       </header>
 
       {/* ── HERO SECTION ─────────────────────────── */}
-      <section className="relative z-10 max-w-7xl mx-auto px-6 pt-16 pb-20 md:pt-24 md:pb-28 flex flex-col items-center text-center">
+      <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-14 md:pt-24 md:pb-28 flex flex-col items-center text-center">
         
         {/* Animated Rotating Cosmic Sigil */}
         <div className="relative w-36 h-36 md:w-40 md:h-40 mb-8 flex items-center justify-center">
@@ -178,7 +143,7 @@ export default function LandingPage() {
         </div>
 
         {/* Premium Display Typography */}
-        <h1 className="text-4xl md:text-7xl font-black font-outfit tracking-tight text-slate-900 mb-6 leading-tight max-w-5xl">
+        <h1 className="text-3xl sm:text-4xl md:text-7xl font-black font-outfit tracking-tight text-slate-900 mb-4 sm:mb-6 leading-tight max-w-5xl">
           Evolusikan Dirimu Bersama <br className="hidden md:inline" />
           <span className="gradient-text drop-shadow-[0_2px_10px_rgba(37,99,235,0.08)] font-black">
             AETHER
@@ -199,20 +164,20 @@ export default function LandingPage() {
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <Link href="/register">
             <NeonButton className="text-base font-black px-8 py-4 shadow-md flex items-center gap-2 group">
-              Mulai Evolusi Skill
+              Get Started
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </NeonButton>
           </Link>
           <a href="#value-prop">
             <NeonButton variant="secondary" className="text-base font-bold px-8 py-4">
-              Pelajari Kebenaran
+              How We Work
             </NeonButton>
           </a>
         </div>
       </section>
 
       {/* ── CORE VALUE PROPOSITION (VERBATIM) ─────────────────────────── */}
-      <section id="value-prop" className="relative z-10 max-w-7xl mx-auto px-6 py-20 border-t border-slate-100">
+      <section id="value-prop" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 border-t border-slate-100">
         <div className="text-center mb-16">
           <h2 className="text-xs font-black text-primary-blue uppercase tracking-widest mb-3 flex items-center justify-center gap-1.5">
             <Brain size={12} className="animate-pulse" />
@@ -235,9 +200,9 @@ export default function LandingPage() {
                 <h4 className="text-2xl font-black text-slate-900 font-outfit">
                   Aether bukan platform belajar.
                 </h4>
-                {/* Wording 2 */}
+                {/* Wording 2 - sisakan badge saja */}
                 <div className="text-lg font-extrabold text-primary-blue font-outfit flex items-center justify-center md:justify-start gap-1">
-                  Aether adalah <span className="bg-primary-blue/10 border border-primary-blue/20 px-3 py-1 rounded-xl shadow-xs">system of learning truth</span>.
+                  <span className="bg-primary-blue/10 border border-primary-blue/20 px-3 py-1 rounded-xl shadow-xs">system of learning truth</span>.
                 </div>
                 {/* Wording 3 */}
                 <p className="text-slate-650 font-medium text-sm md:text-base leading-relaxed mt-2">
@@ -250,7 +215,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── CORE PHILOSOPHY BANNER (VERBATIM & HIGH IMPRESSION) ─────────────────────────── */}
-      <section id="philosophy" className="relative z-10 max-w-7xl mx-auto px-6 py-10">
+      <section id="philosophy" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="max-w-4xl mx-auto bg-gradient-to-r from-amber-500/5 to-primary-blue/5 border border-amber-500/20 rounded-[28px] p-8 shadow-sm flex flex-col md:flex-row items-center gap-6 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none" />
           
@@ -273,7 +238,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── CORE FEATURES GRID (VERBATIM BULLETS) ─────────────────────────── */}
-      <section id="features" className="relative z-10 max-w-7xl mx-auto px-6 py-20">
+      <section id="features" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
         <div className="text-center mb-16">
           <h2 className="text-xs font-black text-primary-blue uppercase tracking-widest mb-3 flex items-center justify-center gap-1.5">
             <Code size={12} className="animate-spin-slow" />
@@ -530,7 +495,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── SYSTEM FLOW (VERBATIM PIPELINE & SUMMARY) ─────────────────────────── */}
-      <section id="pipeline" className="relative z-10 max-w-7xl mx-auto px-6 py-20 border-t border-slate-100 bg-white/40 backdrop-blur-sm rounded-3xl border border-slate-200/50">
+      <section id="pipeline" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 border-t border-slate-100 bg-white/40 backdrop-blur-sm rounded-3xl border border-slate-200/50">
         <div className="text-center mb-16">
           <h2 className="text-xs font-black text-primary-blue uppercase tracking-widest mb-3 flex items-center justify-center gap-1.5">
             <Workflow size={12} className="animate-spin-slow" />
@@ -539,55 +504,85 @@ export default function LandingPage() {
           <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 font-outfit">Alur Operasional Pipeline</h3>
         </div>
 
-        {/* Pipeline Diagram Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 lg:gap-6 max-w-5xl mx-auto items-center">
-          
-          {/* STEP 1 */}
+        {/* Pipeline Diagram Cards - Mobile: vertical, Desktop: horizontal */}
+        {/* Mobile layout */}
+        <div className="flex flex-col gap-2 max-w-xs mx-auto md:hidden">
+          {[
+            { n: "1", title: "Input Activity", desc: "Jurnal, Proyek, Kuis", highlight: false },
+            { n: "2", title: "AI Analysis", desc: "Interpretasi Konteks", highlight: false },
+            { n: "3", title: "SkillEvent", desc: "Payload Kontribusi", highlight: false },
+            { n: "4", title: "Aggregation Engine", desc: "Skill Hierarchy", highlight: false },
+            { n: "5", title: "UserSkill Evolution", desc: "Level Up!", highlight: true },
+          ].map((step, i) => (
+            <div key={step.n}>
+              <div className={`bg-white border rounded-2xl shadow-sm p-4 flex items-center gap-4 ${step.highlight ? "border-primary-blue/20 ring-2 ring-primary-blue/10" : "border-slate-200"}`}>
+                <span className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-xs font-black ${step.highlight ? "bg-primary-blue/10 border border-primary-blue/20 text-primary-blue animate-pulse" : "bg-primary-blue/5 border border-primary-blue/10 text-primary-blue"}`}>{step.n}</span>
+                <div className="flex-1 text-left">
+                  <div className={`font-bold text-xs mb-0.5 flex items-center gap-1 ${step.highlight ? "text-slate-900" : "text-slate-800"}`}>
+                    {step.title}
+                    {step.highlight && <Sparkles size={9} className="text-primary-blue animate-pulse" />}
+                  </div>
+                  <p className={`text-[10px] font-semibold ${step.highlight ? "text-primary-blue font-black" : "text-slate-400"}`}>{step.desc}</p>
+                </div>
+              </div>
+              {i < 4 && (
+                <div className="flex justify-center py-0.5 text-primary-blue/30">
+                  <ChevronRight className="rotate-90" size={14} />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop layout */}
+        <div className="hidden md:grid md:grid-cols-5 gap-4 lg:gap-6 max-w-5xl mx-auto items-center">
           <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm text-center flex flex-col items-center">
             <span className="w-7 h-7 bg-primary-blue/5 border border-primary-blue/10 rounded-full flex items-center justify-center text-[10px] font-black text-primary-blue mb-3">1</span>
             <div className="font-bold text-xs text-slate-800 mb-1">Input Activity</div>
             <p className="text-slate-400 text-[10px] leading-relaxed font-semibold">Jurnal, Proyek, Kuis</p>
           </div>
 
-          <div className="hidden md:flex justify-center text-primary-blue/40">
+          <div className="flex justify-center text-primary-blue/40">
             <ChevronRight className="animate-[ping_3s_infinite]" />
           </div>
 
-          {/* STEP 2 */}
           <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm text-center flex flex-col items-center">
             <span className="w-7 h-7 bg-primary-blue/5 border border-primary-blue/10 rounded-full flex items-center justify-center text-[10px] font-black text-primary-blue mb-3">2</span>
             <div className="font-bold text-xs text-slate-800 mb-1">AI Analysis</div>
             <p className="text-slate-400 text-[10px] leading-relaxed font-semibold">Interpretasi Konteks</p>
           </div>
 
-          <div className="hidden md:flex justify-center text-primary-blue/40">
+          <div className="flex justify-center text-primary-blue/40">
             <ChevronRight className="animate-[ping_3s_infinite]" />
           </div>
 
-          {/* STEP 3 */}
           <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm text-center flex flex-col items-center">
             <span className="w-7 h-7 bg-primary-blue/5 border border-primary-blue/10 rounded-full flex items-center justify-center text-[10px] font-black text-primary-blue mb-3">3</span>
             <div className="font-bold text-xs text-slate-800 mb-1">SkillEvent</div>
             <p className="text-slate-400 text-[10px] leading-relaxed font-semibold">Payload Kontribusi</p>
           </div>
 
-          <div className="hidden md:flex justify-center text-primary-blue/40">
-            <ChevronRight className="animate-[ping_3s_infinite]" />
+          <div className="flex justify-center text-primary-blue/40 col-span-5 my-1">
+            <div className="flex w-full max-w-md items-center gap-1">
+              <div className="flex-1 h-px bg-primary-blue/10" />
+              <ChevronRight className="animate-[ping_3s_infinite] text-primary-blue/40" />
+              <div className="flex-1 h-px bg-primary-blue/10" />
+              <ChevronRight className="animate-[ping_3s_infinite] text-primary-blue/40" />
+              <div className="flex-1 h-px bg-primary-blue/10" />
+            </div>
           </div>
 
-          {/* STEP 4 */}
-          <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm text-center flex flex-col items-center">
+          <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm text-center flex flex-col items-center col-span-2">
             <span className="w-7 h-7 bg-primary-blue/5 border border-primary-blue/10 rounded-full flex items-center justify-center text-[10px] font-black text-primary-blue mb-3">4</span>
             <div className="font-bold text-xs text-slate-800 mb-1">Aggregation Engine</div>
             <p className="text-slate-400 text-[10px] leading-relaxed font-semibold">Skill Hierarchy</p>
           </div>
 
-          <div className="hidden md:flex justify-center text-primary-blue/40">
+          <div className="flex justify-center text-primary-blue/40">
             <ChevronRight className="animate-[ping_3s_infinite]" />
           </div>
 
-          {/* STEP 5 */}
-          <div className="bg-white border border-primary-blue/20 p-5 rounded-2xl shadow-md text-center flex flex-col items-center ring-2 ring-primary-blue/10">
+          <div className="bg-white border border-primary-blue/20 p-5 rounded-2xl shadow-md text-center flex flex-col items-center ring-2 ring-primary-blue/10 col-span-2">
             <span className="w-7 h-7 bg-primary-blue/10 border border-primary-blue/20 rounded-full flex items-center justify-center text-[10px] font-black text-primary-blue mb-3 animate-pulse">5</span>
             <div className="font-bold text-xs text-slate-900 mb-1 flex items-center gap-1">
               UserSkill Evolution
@@ -595,7 +590,6 @@ export default function LandingPage() {
             </div>
             <p className="text-primary-blue text-[10px] leading-relaxed font-black">Level Up!</p>
           </div>
-
         </div>
         
         {/* Verbatim Summary Statement */}
@@ -606,7 +600,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── VISION STATEMENT (VERBATIM & COSMIC STYLE) ─────────────────────────── */}
-      <section className="relative z-10 max-w-5xl mx-auto px-6 py-24 text-center">
+      <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24 text-center">
         <div className="bg-gradient-to-br from-primary-blue/[0.04] to-soft-cyan/[0.04] border border-primary-blue/10 p-10 md:p-14 rounded-[36px] relative overflow-hidden shadow-sm flex flex-col items-center">
           {/* Subtle Decorative Star Element */}
           <div className="absolute top-6 left-6 text-primary-blue/25 animate-pulse">
@@ -622,9 +616,8 @@ export default function LandingPage() {
           </h4>
 
           <blockquote className="text-xl md:text-3xl font-black text-slate-900 tracking-tight leading-relaxed max-w-4xl font-outfit mb-6">
-            “Aether dibangun dengan satu prinsip: <br className="hidden md:inline" />
-            Learning is not consumption. <br className="hidden md:inline" />
-            Learning is <span className="gradient-text font-black">transformation</span>.”
+            "Aether dibangun dengan satu prinsip: <br className="hidden md:inline" />
+            <span className="gradient-text font-black">Every action is learning.</span>"
           </blockquote>
           
           <p className="text-slate-500 font-semibold text-xs md:text-sm max-w-2xl leading-relaxed mt-2 border-t border-slate-200/60 pt-6">
@@ -634,7 +627,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── FINAL CALL TO ACTION (VERBATIM) ─────────────────────────── */}
-      <section className="relative z-10 max-w-4xl mx-auto px-6 pb-28 text-center flex flex-col items-center">
+      <section className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 md:pb-28 text-center flex flex-col items-center">
         <div className="w-10 h-10 rounded-full bg-primary-blue/10 flex items-center justify-center text-primary-blue mb-4">
           <Award size={18} className="animate-bounce" />
         </div>
@@ -657,197 +650,21 @@ export default function LandingPage() {
       </section>
 
       {/* ── FOOTER ─────────────────────────── */}
-      <footer className="relative z-10 border-t border-slate-200/80 bg-white/40 backdrop-blur-md py-16 md:py-20 text-xs text-slate-500 font-medium">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 items-start mb-16">
-          {/* Column 1: Brand Info */}
-          <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center shadow-xs overflow-hidden shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="Aether Footer Logo"
-                  width={30}
-                  height={30}
-                  className="shrink-0 object-contain filter contrast-105 saturate-110"
-                />
-              </div>
-              <span className="font-black text-slate-900 text-xl tracking-wider font-outfit">AETHER</span>
+      <footer className="relative z-10 border-t border-slate-200/80 bg-white/40 backdrop-blur-md py-6 text-xs text-slate-500 font-medium">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+          <div className="flex items-center gap-2">
+            <div className="w-5 h-5 rounded-md bg-white border border-slate-200/80 flex items-center justify-center overflow-hidden shrink-0">
+              <Image src="/logo.png" alt="Aether" width={14} height={14} className="object-contain" />
             </div>
-            <p className="text-slate-400 font-semibold max-w-xs leading-relaxed text-[11px]">
-              AI-driven learning intelligence system yang mengubah aktivitas manusia menjadi perkembangan skill yang hidup.
-            </p>
-            {/* Operational Status Indicator */}
-            <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-150 px-3 py-1 rounded-full text-[10px] font-bold text-emerald-600 shadow-2xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Sistem Operasional
-            </div>
+            <span>&copy; {new Date().getFullYear()} Aether System.</span>
           </div>
-
-          {/* Column 2: System Features */}
-          <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left">
-            <span className="font-black text-slate-950 uppercase tracking-[0.15em] text-[10px] font-outfit">Sistem Core</span>
-            <div className="flex flex-col gap-2.5 font-bold text-slate-400">
-              <a href="#features" className="hover:text-primary-blue transition-colors">Ingestion Layer</a>
-              <a href="#features" className="hover:text-primary-blue transition-colors">AI Processing Engine</a>
-              <a href="#features" className="hover:text-primary-blue transition-colors">Skill Graph Tree</a>
-              <a href="#features" className="hover:text-primary-blue transition-colors">Career Progression</a>
-            </div>
-          </div>
-
-          {/* Column 3: Navigation Links */}
-          <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left">
-            <span className="font-black text-slate-950 uppercase tracking-[0.15em] text-[10px] font-outfit">Navigasi</span>
-            <div className="flex flex-col gap-2.5 font-bold text-slate-400">
-              <a href="#value-prop" className="hover:text-primary-blue transition-colors">Value Proposition</a>
-              <a href="#philosophy" className="hover:text-primary-blue transition-colors">Filosofi Inti</a>
-              <Link href="/login" className="hover:text-primary-blue transition-colors">Gateway Masuk</Link>
-              <Link href="/register" className="hover:text-primary-blue transition-colors">Mulai Evolusi</Link>
-            </div>
-          </div>
-
-          {/* Column 4: Corporate Info & Feedback */}
-          <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left">
-            <div className="flex flex-col gap-1 items-center md:items-start">
-              <span className="font-black text-slate-950 uppercase tracking-[0.15em] text-[10px] font-outfit">Developer</span>
-              <span className="font-bold text-slate-800 text-sm">emuyforge company</span>
-              <a href="mailto:emuyforge@gmail.com" className="text-slate-400 font-bold hover:text-primary-blue transition-colors">emuyforge@gmail.com</a>
-            </div>
-
-            {/* Public Feedback Dev UI Trigger */}
-            <button
-              onClick={() => setIsFeedbackOpen(true)}
-              className="bg-primary-blue/5 border border-primary-blue/15 hover:bg-primary-blue/10 hover:border-primary-blue/20 text-primary-blue text-xs font-black px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-              Feedback Developer
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom Copyright Bar */}
-        <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-200/60 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] text-slate-450 font-bold uppercase tracking-wider">
-          <div className="text-center md:text-left">
-            &copy; {new Date().getFullYear()} Aether System. Built with event-driven learning intelligence philosophy.
-          </div>
-          <div className="text-center md:text-right">
-            A project by emuyforge company. All rights reserved.
+          <div className="text-center sm:text-right">
+            Built with event-driven learning intelligence · emuyforge company.
           </div>
         </div>
       </footer>
 
-      {/* ── DEVELOPER FEEDBACK MODAL (UI KHUSUS LANDING PAGE) ─────────────────────────── */}
-      {isFeedbackOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fadeIn">
-          {/* Backdrop Click to Close */}
-          <div className="absolute inset-0" onClick={() => setIsFeedbackOpen(false)} />
-          
-          <div className="bg-white border border-primary-blue/10 rounded-3xl p-6 md:p-8 shadow-2xl max-w-md w-full relative z-10 animate-scaleIn">
-            {/* Close Button */}
-            <button 
-              onClick={() => setIsFeedbackOpen(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-full bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
-            >
-              <X size={16} />
-            </button>
 
-            {feedbackSuccess ? (
-              <div className="flex flex-col items-center text-center py-8 space-y-4">
-                <div className="w-16 h-16 bg-green-50 border border-green-200 rounded-full flex items-center justify-center text-green-500 mb-2 animate-bounce">
-                  <CheckCircle size={32} />
-                </div>
-                <h3 className="font-outfit font-black text-xl text-slate-900">Pesan Diformat!</h3>
-                <p className="text-sm text-slate-600 font-medium leading-relaxed px-2">
-                  Terima kasih! Kami sedang menyiapkan draf feedback dan membuka aplikasi email Anda untuk mengirimkannya ke tim developer kami di <span className="text-primary-blue font-bold">emuyforge company (emuyforge@gmail.com)</span>.
-                </p>
-                <div className="text-[10px] text-slate-400 font-bold animate-pulse mt-4">
-                  Mengalihkan ke Email Client...
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={handleFeedbackSubmit} className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <div className="text-xs font-black text-primary-blue uppercase tracking-widest flex items-center gap-1.5">
-                    <Sparkles size={12} className="animate-pulse" />
-                    DEVELOPER PORTAL
-                  </div>
-                  <h3 className="text-xl font-black text-slate-900 font-outfit">Kirim Feedback Dev</h3>
-                  <p className="text-xs text-slate-500 font-medium">
-                    Saran, kritik, atau bug report untuk pengembang Aether.
-                  </p>
-                </div>
-
-                <div className="flex gap-2 bg-slate-100 p-1 rounded-xl border border-slate-200/50 mt-1">
-                  <button
-                    type="button"
-                    onClick={() => setFeedbackType('bug')}
-                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                      feedbackType === 'bug' 
-                        ? "bg-white text-red-500 shadow-sm" 
-                        : "text-slate-500 hover:text-slate-700"
-                    }`}
-                  >
-                    Bug / Error
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setFeedbackType('suggestion')}
-                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                      feedbackType === 'suggestion' 
-                        ? "bg-white text-primary-blue shadow-sm" 
-                        : "text-slate-500 hover:text-slate-700"
-                    }`}
-                  >
-                    Saran Fitur
-                  </button>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="feedbackName" className="text-xs font-bold text-slate-500">Nama Anda</label>
-                  <input
-                    type="text"
-                    id="feedbackName"
-                    value={feedbackName}
-                    onChange={(e) => setFeedbackName(e.target.value)}
-                    placeholder="Masukkan nama Anda"
-                    required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-850 focus:outline-none focus:border-primary-blue/40 font-semibold"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="feedbackEmail" className="text-xs font-bold text-slate-500">Email Anda</label>
-                  <input
-                    type="email"
-                    id="feedbackEmail"
-                    value={feedbackEmail}
-                    onChange={(e) => setFeedbackEmail(e.target.value)}
-                    placeholder="nama@email.com"
-                    required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-850 focus:outline-none focus:border-primary-blue/40 font-semibold"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="feedbackMsg" className="text-xs font-bold text-slate-500">Detail Laporan / Pesan</label>
-                  <textarea
-                    id="feedbackMsg"
-                    value={feedbackMsg}
-                    onChange={(e) => setFeedbackMsg(e.target.value)}
-                    placeholder={feedbackType === "bug" ? "Jelaskan bug atau error yang Anda alami..." : "Tuliskan saran fitur baru Anda..."}
-                    required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-850 focus:outline-none focus:border-primary-blue/40 resize-none h-24 font-semibold"
-                  />
-                </div>
-
-                <NeonButton type="submit" className="w-full py-3 mt-2 font-bold text-sm flex items-center justify-center gap-2">
-                  <Mail size={16} />
-                  Buka Email & Kirim
-                </NeonButton>
-              </form>
-            )}
-          </div>
-        </div>
-      )}
 
     </div>
   );

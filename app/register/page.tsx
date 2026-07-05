@@ -41,9 +41,9 @@ export default function RegisterPage() {
 
     try {
       await register(email, username, password);
-      setSuccess("Pendaftaran berhasil! Mengarahkan ke verifikasi email...");
+      setSuccess("Pendaftaran berhasil! Mengarahkan ke halaman masuk...");
       setTimeout(() => {
-        router.push(`/verify-otp?email=${encodeURIComponent(email)}`);
+        router.push("/login");
       }, 1500);
     } catch (err: any) {
       setError(
