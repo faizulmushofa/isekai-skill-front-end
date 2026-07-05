@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { apiClient } from "@/lib/api-client";
+import { useAuthStore } from "./useAuthStore";
 
 export interface ChatMessage {
   id: string;
@@ -19,12 +20,14 @@ interface QuizState {
   totalQuestions: number;
   currentQuestion: { id: string; questionText: string } | null;
   isLoading: boolean;
+  history: any[];
 
   startQuiz: (topic: string) => Promise<void>;
   selectMode: (mode: "1" | "2") => Promise<void>;
   submitAnswer: (answerText: string) => Promise<void>;
   resetQuiz: () => void;
   addMessage: (message: Omit<ChatMessage, "id" | "timestamp">) => void;
+  fetchHistory: () => Promise<void>;
 }
 
 export const useQuizStore = create<QuizState>((set, get) => ({
@@ -43,6 +46,16 @@ export const useQuizStore = create<QuizState>((set, get) => ({
   totalQuestions: 0,
   currentQuestion: null,
   isLoading: false,
+  history: [],
+
+  fetchHistory: async () => {
+    try {
+      const res = await apiClient.get("/quiz/history");
+      set({ history: res.data });
+    } catch (err: any) {
+      console.error("Gagal memuat riwayat kuis:", err);
+    }
+  },
 
   addMessage: (msg) => {
     const newMessage: ChatMessage = {
@@ -138,7 +151,7 @@ export const useQuizStore = create<QuizState>((set, get) => ({
 
     try {
       const res = await apiClient.post("/quiz/answer", { answerText });
-      const { state, message, data } = res.data;
+      const { state, data } = res.data;
 
       if (state === "QUESTION_DELIVERED") {
         set({
@@ -168,6 +181,9 @@ export const useQuizStore = create<QuizState>((set, get) => ({
           sender: "ai",
           text: `🎉 **Kuis Selesai!** Seluruh jawaban Anda telah dievaluasi serentak oleh AI.\n\n🏆 **Skor Akhir:** ${data.score}/100\n\n📈 **Progres Kemampuan Baru:**\n${breakdownStr || "Tidak ada progres terdeteksi."}\n\nKetik topik baru jika Anda ingin kembali menantang diri Anda!`,
         });
+
+        useAuthStore.getState().fetchCareerProgress();
+        get().fetchHistory();
       }
     } catch (err: any) {
       set({ isLoading: false });

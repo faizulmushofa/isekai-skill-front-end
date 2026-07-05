@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import GlassCard from "@/components/ui/GlassCard";
 import GlowInput from "@/components/ui/GlowInput";
 import NeonButton from "@/components/ui/NeonButton";
-import { ArrowLeft, Calendar, Sparkles, BookMarked } from "lucide-react";
+import { ArrowLeft, Calendar, Sparkles, BookMarked, RefreshCw } from "lucide-react";
 
 interface JournalEditorViewerProps {
   j: any;
@@ -116,6 +116,47 @@ export default function JournalEditorViewer({ j }: JournalEditorViewerProps) {
             {/* Content Markdown/Text viewport */}
             <div className="flex-1 min-h-0 bg-slate-50 border border-slate-200 rounded-2xl p-5 overflow-y-auto text-slate-700 text-sm leading-relaxed whitespace-pre-wrap font-medium">
               {j.selectedJournal.content}
+            </div>
+
+            {/* Extracted Skills / XP Section */}
+            <div className="flex flex-col gap-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+              <div className="flex justify-between items-center gap-3">
+                <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest flex items-center gap-1.5 shrink-0">
+                  <Sparkles size={12} className="text-primary-blue animate-pulse" />
+                  XP Yang Diperoleh:
+                </span>
+                <button
+                  type="button"
+                  onClick={j.reloadSelectedJournal}
+                  disabled={j.reloadLoading}
+                  className="px-2.5 py-1.5 rounded-xl text-slate-600 hover:text-primary-blue hover:bg-slate-100 disabled:opacity-50 transition-all flex items-center gap-1.5 text-[10px] font-black cursor-pointer border border-slate-200 bg-white shadow-sm shrink-0 whitespace-nowrap"
+                  title="Lihat / Muat Ulang XP"
+                >
+                  <RefreshCw size={11} className={`${j.reloadLoading ? 'animate-spin text-primary-blue' : 'text-slate-400'}`} />
+                  {j.reloadLoading ? 'Memuat...' : 'Lihat / Muat Ulang XP'}
+                </button>
+              </div>
+
+              {j.selectedJournal.skillEvents && j.selectedJournal.skillEvents.length > 0 ? (
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {j.selectedJournal.skillEvents.map((se: any, idx: number) => (
+                    <div
+                      key={idx}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-150 text-emerald-700 text-xs font-black shadow-sm"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                      <span>{se.skill?.name || "Skill"}</span>
+                      <span className="text-emerald-500 font-extrabold">+{se.contribution.toFixed(2)}% XP</span>
+                      <span className="text-slate-400 text-[10px] font-semibold">({se.rawScore.toFixed(0)}% Match)</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-[11px] text-slate-500 font-semibold p-3 bg-slate-100/50 rounded-xl border border-slate-200/60 flex items-center gap-2 mt-0.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
+                  <span>AI sedang memproses ekstraksi XP... Silakan klik tombol di atas untuk menyegarkan data.</span>
+                </div>
+              )}
             </div>
 
             {/* Informative notification box */}

@@ -15,6 +15,7 @@ export function useJournals() {
 
   const [dragActive, setDragActive] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
+  const [reloadLoading, setReloadLoading] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -22,16 +23,45 @@ export function useJournals() {
     }
   }, [isAuthenticated]);
 
+  const selectJournal = async (journal: any) => {
+    if (!journal) {
+      setSelectedJournal(null);
+      return;
+    }
+    setSelectedJournal(journal);
+    try {
+      const res = await apiClient.get(`/journals/${journal.id}`);
+      setSelectedJournal(res.data);
+      useAuthStore.getState().fetchCareerProgress();
+    } catch (err: any) {
+      console.error("Gagal mengambil detail jurnal:", err);
+    }
+  };
+
+  const reloadSelectedJournal = async () => {
+    if (!selectedJournal) return;
+    setReloadLoading(true);
+    try {
+      const res = await apiClient.get(`/journals/${selectedJournal.id}`);
+      setSelectedJournal(res.data);
+      useAuthStore.getState().fetchCareerProgress();
+    } catch (err: any) {
+      console.error("Gagal memuat ulang detail jurnal:", err);
+    } finally {
+      setReloadLoading(false);
+    }
+  };
+
   const fetchJournals = async () => {
     setLoading(true);
     try {
       const res = await apiClient.get("/journals");
       setJournals(res.data);
       if (res.data.length > 0 && !selectedJournal) {
-        setSelectedJournal(res.data[0]);
+        selectJournal(res.data[0]);
       }
     } catch (err: any) {
-      alert("Gagal memproses file: " + (err.response?.data?.message || err.message));
+      alert("Gagal mengambil daftar jurnal: " + (err.response?.data?.message || err.message));
     } finally {
       setLoading(false);
     }
@@ -44,7 +74,9 @@ export function useJournals() {
     try {
       const res = await apiClient.post("/journals", { title, content });
       setJournals((prev) => [res.data, ...prev]);
-      setSelectedJournal(res.data);
+      // Fetch full journal detail (with skillEvents already in DB after synchronous pipeline)
+      const detailRes = await apiClient.get(`/journals/${res.data.id}`);
+      setSelectedJournal(detailRes.data);
       setIsCreating(false);
       setTitle("");
       setContent("");
@@ -94,7 +126,7 @@ export function useJournals() {
         },
       });
       setJournals((prev) => [res.data, ...prev]);
-      setSelectedJournal(res.data);
+      selectJournal(res.data);
       alert("File jurnal berhasil diupload & dianalisis oleh AI!");
       useAuthStore.getState().fetchCareerProgress();
     } catch (err: any) {
@@ -108,11 +140,27 @@ export function useJournals() {
     }
   };
 
+  const deleteJournal = async (journalId: string) => {
+    if (!confirm("Apakah Anda yakin ingin menghapus jurnal ini?")) return;
+    try {
+      await apiClient.delete(`/journals/${journalId}`);
+      setJournals((prev) => {
+        const filtered = prev.filter((j) => j.id !== journalId);
+        if (selectedJournal?.id === journalId) {
+          selectJournal(filtered.length > 0 ? filtered[0] : null);
+        }
+        return filtered;
+      });
+    } catch (err: any) {
+      alert("Gagal menghapus jurnal: " + (err.response?.data?.message || err.message));
+    }
+  };
+
   return {
     journals,
     loading,
     selectedJournal,
-    setSelectedJournal,
+    setSelectedJournal: selectJournal,
     
     isCreating,
     setIsCreating,
@@ -128,5 +176,8 @@ export function useJournals() {
     handleDrag,
     handleDrop,
     handleFileSelect,
+    deleteJournal,
+    reloadSelectedJournal,
+    reloadLoading,
   };
 }
